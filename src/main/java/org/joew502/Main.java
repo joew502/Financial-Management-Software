@@ -7,9 +7,10 @@ public class Main {
         //Creating a JSONObject object
         JSONObject jsonObject = new JSONObject();
         //Inserting key-value pairs into the json object
-        jsonObject.put("ID", "1");
+        jsonObject.put("Name", "Joe");
         DataSave dataSave = new DataSave();
         String saveStatus = dataSave.save(jsonObject, "", "output");
         System.out.println(saveStatus);
+        JSONObject loadedData = new DataLoad().load("output.json");
     }
 }
