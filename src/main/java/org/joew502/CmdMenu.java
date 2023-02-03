@@ -52,8 +52,8 @@ public class CmdMenu {
             try {
                 menuChoice = menuInput.nextInt();
                 switch (menuChoice) {
-                    case 1 -> Main.jsonData.put("Test_Value","1234");
-                    case 2 -> System.out.println(Main.jsonData.get("Test_Value"));
+                    case 1 -> InputIncome.incomeMenu();
+                    case 2 -> {}
                     case 3 -> {}
                     default -> System.out.println("Please enter an integer value between 1 and 3");
                 }
