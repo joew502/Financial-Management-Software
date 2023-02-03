@@ -5,14 +5,13 @@ import org.json.simple.*;
 import org.json.simple.parser.*;
 
 public class DataLoad {
-    public JSONObject load(String filePath){
+    public void load(String filePath){
         JSONParser jsonParser = new JSONParser();
         try {
             Object obj = jsonParser.parse(new FileReader(filePath));
-            return (JSONObject)obj;
+            DataStore.jsonData = (JSONObject) obj;
         } catch(Exception e) {
             e.printStackTrace();
         }
-        return null;
     }
 }

@@ -4,16 +4,15 @@ import java.io.FileWriter;
 import java.io.IOException;
 import org.json.simple.JSONObject;
 public class DataSave {
-    public String save(JSONObject jsonData, String filePath, String fileName){
-        String fullPath = filePath+fileName+".json";
+    public void save(String filePath){
         try {
-            FileWriter file = new FileWriter(fullPath);
-            file.write(jsonData.toJSONString());
+            FileWriter file = new FileWriter(filePath);
+            file.write(DataStore.jsonData.toJSONString());
             file.close();
-            return "Saved Successfully";
+            System.out.println("Saved Successfully");
         } catch (IOException e) {
             e.printStackTrace();
-            return "Save Failed";
+            System.out.println("Save Failed");
         }
     }
 }

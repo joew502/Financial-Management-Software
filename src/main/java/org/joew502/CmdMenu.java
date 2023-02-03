@@ -23,8 +23,8 @@ public class CmdMenu {
             try {
                 menuChoice = menuInput.nextInt();
                 switch (menuChoice) {
-                    case 1 -> System.out.println("1");
-                    case 2 -> System.out.println("2");
+                    case 1 -> new DataLoad().load("program_data.json");
+                    case 2 -> new DataSave().save("program_data.json");
                     case 3 -> inAndExpMenu();
                     case 4 -> System.out.println("4");
                     case 5 -> exit(0);
@@ -52,8 +52,8 @@ public class CmdMenu {
             try {
                 menuChoice = menuInput.nextInt();
                 switch (menuChoice) {
-                    case 1 -> System.out.println("1");
-                    case 2 -> System.out.println("2");
+                    case 1 -> DataStore.jsonData.put("Test_Value","1234");
+                    case 2 -> System.out.println(DataStore.jsonData.get("Test_Value"));
                     case 3 -> {}
                     default -> System.out.println("Please enter an integer value between 1 and 3");
                 }
