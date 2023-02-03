@@ -5,7 +5,7 @@ import java.util.Scanner;
 import static java.lang.System.exit;
 
 public class CmdMenu {
-    public void mainMenu() {
+    public static void mainMenu() {
         Scanner menuInput = new Scanner(System.in);
         int menuChoice = 0;
         while (menuChoice != 5) {
@@ -23,8 +23,8 @@ public class CmdMenu {
             try {
                 menuChoice = menuInput.nextInt();
                 switch (menuChoice) {
-                    case 1 -> new DataLoad().load("program_data.json");
-                    case 2 -> new DataSave().save("program_data.json");
+                    case 1 -> DataManage.load("program_data.json");
+                    case 2 -> DataManage.save("program_data.json");
                     case 3 -> inAndExpMenu();
                     case 4 -> System.out.println("4");
                     case 5 -> exit(0);
@@ -36,7 +36,7 @@ public class CmdMenu {
             }
         }
     }
-    public void inAndExpMenu() {
+    public static void inAndExpMenu() {
         Scanner menuInput = new Scanner(System.in);
         int menuChoice = 0;
         while (menuChoice != 3) {
@@ -52,8 +52,8 @@ public class CmdMenu {
             try {
                 menuChoice = menuInput.nextInt();
                 switch (menuChoice) {
-                    case 1 -> DataStore.jsonData.put("Test_Value","1234");
-                    case 2 -> System.out.println(DataStore.jsonData.get("Test_Value"));
+                    case 1 -> Main.jsonData.put("Test_Value","1234");
+                    case 2 -> System.out.println(Main.jsonData.get("Test_Value"));
                     case 3 -> {}
                     default -> System.out.println("Please enter an integer value between 1 and 3");
                 }

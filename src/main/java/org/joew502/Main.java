@@ -10,7 +10,8 @@ public class Main {
         //String saveStatus = dataSave.save(jsonObject, "", "output");
         //System.out.println(saveStatus);
         //JSONObject loadedData = new DataLoad().load("output.json");
-        DataStore.jsonData = new JSONObject();
-        new CmdMenu().mainMenu();
+        jsonData = new JSONObject();
+        CmdMenu.mainMenu();
     }
+    static JSONObject jsonData;
 }

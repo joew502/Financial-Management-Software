@@ -8,7 +8,7 @@ import java.io.File;
 
 import static org.junit.Assert.*;
 
-public class DataLoadTest {
+public class DataManageTest {
 
     @Test
     public void load() {
