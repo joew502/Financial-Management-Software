@@ -5,24 +5,24 @@ import org.json.simple.JSONObject;
 import java.util.Scanner;
 import java.util.Set;
 
-public class InputIncome {
-    public static void incomeMenu() {
+public class InputExpenditure {
+    public static void expenditureMenu() {
         Scanner menuInput = new Scanner(System.in);
         int menuChoice = 0;
-        Set incomeTypes = ((JSONObject) Main.jsonData.get("Income")).keySet();
-        while (menuChoice != incomeTypes.size()+2) {
+        Set expenditureTypes = ((JSONObject) Main.jsonData.get("Expenditure")).keySet();
+        while (menuChoice != expenditureTypes.size()+2) {
             System.out.println("""
                                     
-                    -- Input Income --
+                    -- Input Expenditure --
                     
-                    Pick a type to add income to or add a new type
+                    Pick a type to add expenditure to or add a new type
                     """);
-            incomeTypes = ((JSONObject) Main.jsonData.get("Income")).keySet();
+            expenditureTypes = ((JSONObject) Main.jsonData.get("Expenditure")).keySet();
             int i;
-            for (i = 1; i< incomeTypes.size()+1; i++) {
-                System.out.println(i+") "+ incomeTypes.toArray()[i-1]);
+            for (i = 1; i< expenditureTypes.size()+1; i++) {
+                System.out.println(i+") "+ expenditureTypes.toArray()[i-1]);
             }
-            System.out.println("\n"+(i)+") Add Income Type");
+            System.out.println("\n"+(i)+") Add Expenditure Type");
             System.out.println((i+1)+") Return to Previous Menu");
             System.out.print("\nInput the number of your choice:");
             try {
@@ -33,10 +33,10 @@ public class InputIncome {
                     break;
                 } else if (menuChoice == i) {
                     System.out.println("--- WIP ---");
-                    //TODO - Add Income Type
+                    //TODO - Add Expenditure Type
                 } else {
                     System.out.println("--- WIP ---");
-                    //TODO - Append Income Type
+                    //TODO - Append Expenditure Type
                 }
             } catch (Exception e) {
                 System.out.println("Please enter an integer value between 1 and "+(i+1));

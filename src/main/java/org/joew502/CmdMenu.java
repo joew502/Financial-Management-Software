@@ -53,7 +53,7 @@ public class CmdMenu {
                 menuChoice = menuInput.nextInt();
                 switch (menuChoice) {
                     case 1 -> InputIncome.incomeMenu();
-                    case 2 -> {}
+                    case 2 -> InputExpenditure.expenditureMenu();
                     case 3 -> {}
                     default -> System.out.println("Please enter an integer value between 1 and 3");
                 }
