@@ -32,16 +32,27 @@ public class InputIncome {
                 } else if (menuChoice == i+1) {
                     break;
                 } else if (menuChoice == i) {
-                    System.out.println("--- WIP ---");
-                    //TODO - Add Income Type
+                    addIncomeType();
                 } else {
-                    System.out.println("--- WIP ---");
-                    //TODO - Append Income Type
+                    addIncome((String) incomeTypes.toArray()[menuChoice-1]);
                 }
             } catch (Exception e) {
                 System.out.println("Please enter an integer value between 1 and "+(i+1));
                 menuInput.next();
             }
         }
+    }
+    private static void addIncomeType() {
+        Scanner typeInput = new Scanner(System.in);
+        try {
+            String typeName = typeInput.nextLine();
+            ((JSONObject) Main.jsonData.get("Income")).put(typeName, 0);
+        } catch (Exception e) {
+            System.out.println("Please enter a String");
+            typeInput.next();
+        }
+    }
+    private static void addIncome(String typeKey) {
+        
     }
 }
