@@ -44,15 +44,24 @@ public class InputIncome {
     }
     private static void addIncomeType() {
         Scanner typeInput = new Scanner(System.in);
-        try {
-            String typeName = typeInput.nextLine();
-            ((JSONObject) Main.jsonData.get("Income")).put(typeName, 0);
-        } catch (Exception e) {
-            System.out.println("Please enter a String");
-            typeInput.next();
+        JSONObject incomeData = (JSONObject) Main.jsonData.get("Income");
+        int exitValue = 0;
+        while (exitValue != 1) {
+            try {
+                String typeName = typeInput.nextLine();
+                if (incomeData.containsKey(typeName)) {
+                    System.out.println("This income type already exists");
+                } else {
+                    ((JSONObject) Main.jsonData.get("Income")).put(typeName, 0);
+                    exitValue = 1;
+                }
+            } catch (Exception e) {
+                System.out.println("Please enter a String");
+                typeInput.next();
+            }
         }
     }
     private static void addIncome(String typeKey) {
-        
+        ((JSONObject) Main.jsonData.get("Income")).get(typeKey);
     }
 }
