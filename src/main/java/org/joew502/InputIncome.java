@@ -47,6 +47,7 @@ public class InputIncome {
         JSONObject incomeData = (JSONObject) Main.jsonData.get("Income");
         int exitValue = 0;
         while (exitValue != 1) {
+            System.out.print("\nPlease enter the type of income to add: ");
             try {
                 String typeName = typeInput.nextLine();
                 if (incomeData.containsKey(typeName)) {
@@ -62,6 +63,21 @@ public class InputIncome {
         }
     }
     private static void addIncome(String typeKey) {
-        ((JSONObject) Main.jsonData.get("Income")).get(typeKey);
+        System.out.println(typeKey);
+        int currentValue = Integer.parseInt(((JSONObject) Main.jsonData.get("Income")).get(typeKey).toString());
+        Scanner amountInput = new Scanner(System.in);
+        int exitValue = 0;
+        while (exitValue != 1) {
+            System.out.print("\nPlease enter the amount of income to add to "+typeKey+" (Current Value: "+currentValue
+                    +"): ");
+            try {
+                int changeValue = amountInput.nextInt();
+                ((JSONObject) Main.jsonData.get("Income")).put(typeKey, currentValue+changeValue);
+                exitValue = 1;
+            } catch (Exception e) {
+                System.out.println("Please enter an integer");
+                amountInput.next();
+            }
+        }
     }
 }
