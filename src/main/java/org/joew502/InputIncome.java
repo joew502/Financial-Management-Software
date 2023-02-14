@@ -63,7 +63,6 @@ public class InputIncome {
         }
     }
     private static void addIncome(String typeKey) {
-        System.out.println(typeKey);
         int currentValue = Integer.parseInt(((JSONObject) Main.jsonData.get("Income")).get(typeKey).toString());
         Scanner amountInput = new Scanner(System.in);
         int exitValue = 0;
