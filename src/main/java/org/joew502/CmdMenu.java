@@ -38,7 +38,7 @@ public class CmdMenu {
             }
         }
     }
-    private static void inAndExpMenu() {
+    public static void inAndExpMenu() {
         Scanner menuInput = new Scanner(System.in);
         int menuChoice = 0;
         while (menuChoice != 3) {
@@ -54,8 +54,8 @@ public class CmdMenu {
             try {
                 menuChoice = menuInput.nextInt();
                 switch (menuChoice) {
-                    case 1 -> InputIncome.incomeMenu();
-                    case 2 -> InputExpenditure.expenditureMenu();
+                    case 1 -> CmdInputIncome.incomeMenu();
+                    case 2 -> CmdInputExpenditure.expenditureMenu();
                     case 3 -> {}
                     default -> System.out.println("Please enter an integer value between 1 and 3");
                 }
@@ -65,7 +65,7 @@ public class CmdMenu {
             }
         }
     }
-    private static void displayInAndExp() {
+    public static void displayInAndExp() {
         System.out.print("""
                                                 
             -- Income and Expenditure --
