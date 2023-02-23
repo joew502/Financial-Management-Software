@@ -10,8 +10,10 @@ public class DataManage {
         try {
             Object obj = jsonParser.parse(new FileReader(filePath));
             Main.jsonData = (JSONObject) obj;
+            System.out.println("Loaded Successfully");
         } catch(Exception e) {
             e.printStackTrace();
+            System.out.println("Load Failed");
         }
     }
     public static void save(String filePath){

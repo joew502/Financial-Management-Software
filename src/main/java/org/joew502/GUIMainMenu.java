@@ -37,7 +37,8 @@ public class GUIMainMenu {
     displayInAndExpButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            CmdMenu.displayInAndExp();
+            Main.guiMain.guiInOrExp.refreshData();
+            Main.guiMain.crd.show(Main.guiMain.cPane, "inOrExp");
         }
     });
     exitButton.addActionListener(new ActionListener() {

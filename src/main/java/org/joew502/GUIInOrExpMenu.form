@@ -18,28 +18,28 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="9f24e" class="javax.swing.JButton" binding="button1" default-binding="true">
+          <component id="9f24e" class="javax.swing.JButton" binding="inputIncomeButton" default-binding="true">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Button"/>
+              <text value="Input Income"/>
             </properties>
           </component>
-          <component id="8534e" class="javax.swing.JButton" binding="button2" default-binding="true">
+          <component id="8534e" class="javax.swing.JButton" binding="inputExpenditureButton" default-binding="true">
             <constraints>
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Button"/>
+              <text value="Input Expenditure"/>
             </properties>
           </component>
-          <component id="f0304" class="javax.swing.JButton" binding="button3" default-binding="true">
+          <component id="f0304" class="javax.swing.JButton" binding="returnButton">
             <constraints>
               <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Button"/>
+              <text value="Return to Main Menu"/>
             </properties>
           </component>
         </children>

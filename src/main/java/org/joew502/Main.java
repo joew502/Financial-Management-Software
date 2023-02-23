@@ -12,7 +12,7 @@ public class Main{
         jsonData.put("Expenditure", new JSONObject());
 
         guiMain = new GUIMain();
-        
+
         //CmdMenu.mainMenu();
     }
 }
