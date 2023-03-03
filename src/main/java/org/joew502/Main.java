@@ -13,6 +13,5 @@ public class Main{
 
         guiMain = new GUIMain();
 
-        //CmdMenu.mainMenu();
     }
 }

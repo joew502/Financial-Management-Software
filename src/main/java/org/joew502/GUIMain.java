@@ -34,8 +34,10 @@ public class GUIMain extends JFrame {
         guiAddType = new GUIAddType();
         cPane.add("addType", guiAddType.mainPanel);
 
-        //ImageIcon img = new ImageIcon("");
-        //mainMenu.setIconImage(img.getImage());
+        //Image icon = Toolkit.getDefaultToolkit().getImage("fms_icon_small.png");
+        //setIconImage(icon);
+        //ImageIcon img = new ImageIcon("fms_icon_small.png");
+        //setIconImage(img.getImage());
         setTitle("Financial Management Software");
         setBounds(200,200,600,400);
         setVisible(true);

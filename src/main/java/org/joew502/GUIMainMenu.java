@@ -7,12 +7,12 @@ import java.awt.event.ActionListener;
 import static java.lang.System.exit;
 
 public class GUIMainMenu {
+    public JPanel mainPanel;
     private JButton loadDataButton;
     private JButton saveDataButton;
     private JButton inputInOrExpButton;
     private JButton displayInAndExpButton;
     private JButton exitButton;
-    public JPanel mainPanel;
     private JPanel buttonPanel;
 
     public GUIMainMenu() {
