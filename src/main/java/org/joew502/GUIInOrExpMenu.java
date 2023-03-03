@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 
 public class GUIInOrExpMenu {
     public JPanel mainPanel;
-    private JPanel buttonPanel;
     private JButton inputIncomeButton;
     private JButton inputExpenditureButton;
     private JButton returnButton;
@@ -14,13 +13,15 @@ public GUIInOrExpMenu() {
     inputIncomeButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-
+            Main.guiMain.guiTypeSelect.refreshData("Income");
+            Main.guiMain.crd.show(Main.guiMain.cPane, "typeSelect");
         }
     });
     inputExpenditureButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-
+            Main.guiMain.guiTypeSelect.refreshData("Expenditure");
+            Main.guiMain.crd.show(Main.guiMain.cPane, "typeSelect");
         }
     });
     returnButton.addActionListener(new ActionListener() {

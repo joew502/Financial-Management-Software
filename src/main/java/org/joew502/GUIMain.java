@@ -7,6 +7,9 @@ public class GUIMain extends JFrame {
     public CardLayout crd;
     public Container cPane;
     public GUIInOrExp guiInOrExp;
+    public GUITypeSelect guiTypeSelect;
+    public GUIInputValue guiInputValue;
+    public GUIAddType guiAddType;
     public GUIMain(){
 
         cPane = getContentPane();
@@ -21,6 +24,15 @@ public class GUIMain extends JFrame {
 
         guiInOrExp = new GUIInOrExp();
         cPane.add("inOrExp", guiInOrExp.mainPanel);
+
+        guiTypeSelect = new GUITypeSelect();
+        cPane.add("typeSelect", guiTypeSelect.mainPanel);
+
+        guiInputValue = new GUIInputValue();
+        cPane.add("inputValue", guiInputValue.mainPanel);
+
+        guiAddType = new GUIAddType();
+        cPane.add("addType", guiAddType.mainPanel);
 
         //ImageIcon img = new ImageIcon("");
         //mainMenu.setIconImage(img.getImage());
