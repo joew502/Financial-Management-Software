@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.LinkedHashMap;
 
 public class GUITypeSelect {
     public JPanel mainPanel;
@@ -38,7 +39,7 @@ public class GUITypeSelect {
         
         addTypeButton.setText("Add "+inOrExp+" Type");
 
-        Object[] typeKeys = ((JSONObject) Main.jsonData.get(inOrExp)).keySet().toArray();
+        Object[] typeKeys = ((LinkedHashMap<String, Integer>) Main.jsonData.get(inOrExp)).keySet().toArray();
 
         buttonPanel.removeAll();
 
