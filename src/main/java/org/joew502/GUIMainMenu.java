@@ -14,18 +14,20 @@ public class GUIMainMenu {
     private JButton displayInAndExpButton;
     private JButton exitButton;
     private JPanel buttonPanel;
+    private JButton loadDataJSONButton;
+    private JButton saveDataJSONButton;
 
     public GUIMainMenu() {
     loadDataButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            DataManage.load("program_data.json");
+            DataManage.load("program_data.ser");
         }
     });
     saveDataButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            DataManage.save("program_data.json");
+            DataManage.save("program_data.ser");
         }
     });
     inputInOrExpButton.addActionListener(new ActionListener() {
@@ -47,5 +49,17 @@ public class GUIMainMenu {
             exit(0);
         }
     });
-}
+        loadDataJSONButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DataManage.loadJson("program_data.json");
+            }
+        });
+        saveDataJSONButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DataManage.saveJson("program_data.json");
+            }
+        });
+    }
 }

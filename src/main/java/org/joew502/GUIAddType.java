@@ -5,6 +5,7 @@ import org.json.simple.JSONObject;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.LinkedHashMap;
 
 public class GUIAddType {
     public JPanel mainPanel;
@@ -25,11 +26,11 @@ public class GUIAddType {
             public void actionPerformed(ActionEvent e) {
                 try {
                     String addTypeName = addTypeField.getText();
-                    JSONObject incomeData = (JSONObject) Main.jsonData.get(currentInOrExp);
+                    LinkedHashMap<String,Integer> incomeData = (LinkedHashMap<String,Integer>) Main.jsonData.get(currentInOrExp);
                     if (incomeData.containsKey(addTypeName)) {
                         JOptionPane.showMessageDialog(Main.guiMain,"This income type already exists");
                     } else {
-                        ((JSONObject) Main.jsonData.get(currentInOrExp)).put(addTypeName, 0);
+                        ((LinkedHashMap<String,Integer>) Main.jsonData.get(currentInOrExp)).put(addTypeName, 0);
                         Main.guiMain.guiTypeSelect.refreshData(currentInOrExp);
                         Main.guiMain.crd.show(Main.guiMain.cPane, "typeSelect");
                     }

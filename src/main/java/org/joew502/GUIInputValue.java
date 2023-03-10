@@ -1,10 +1,9 @@
 package org.joew502;
 
-import org.json.simple.JSONObject;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.LinkedHashMap;
 
 public class GUIInputValue {
     public JPanel mainPanel;
@@ -29,8 +28,8 @@ public class GUIInputValue {
                 try {
                     int addValue = Integer.parseInt(valueField.getText());
                     String typeKey = incomeTypeLabel.getText();
-                    int currentValue = Integer.parseInt(((JSONObject) Main.jsonData.get(currentInOrExp)).get(typeKey).toString());
-                    ((JSONObject) Main.jsonData.get(currentInOrExp)).put(typeKey, currentValue+addValue);
+                    int currentValue = Integer.parseInt(((LinkedHashMap<String, Integer>) Main.jsonData.get(currentInOrExp)).get(typeKey).toString());
+                    ((LinkedHashMap<String, Integer>) Main.jsonData.get(currentInOrExp)).put(typeKey, currentValue+addValue);
                     Main.guiMain.guiTypeSelect.refreshData(currentInOrExp);
                     Main.guiMain.crd.show(Main.guiMain.cPane, "typeSelect");
                 } catch (Exception NumberFormatException) {
@@ -44,6 +43,6 @@ public class GUIInputValue {
         valueField.setText("");
         inputLabel.setText("Input "+inOrExp);
         incomeTypeLabel.setText(typeKey);
-        valueLabel.setText("Current Value: "+((JSONObject) Main.jsonData.get(inOrExp)).get(typeKey));
+        valueLabel.setText("Current Value: "+((LinkedHashMap<String, Integer>) Main.jsonData.get(inOrExp)).get(typeKey));
     }
 }
