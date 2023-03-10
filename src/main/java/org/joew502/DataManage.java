@@ -46,7 +46,7 @@ public class DataManage {
             Main.jsonData.remove("Income");
             Main.jsonData.put("Income", new LinkedHashMap<String,Integer>());
             for (Object key : incomeKeys2) {
-                ((LinkedHashMap<String,Integer>) Main.jsonData.get("Income")).put((String) key, (Integer) ((Long) incomeData.get(key)).intValue());
+                ((LinkedHashMap<String,Integer>) Main.jsonData.get("Income")).put((String) key, ((Long) incomeData.get(key)).intValue());
             }
             JSONObject expenditureData = (JSONObject) Main.jsonData.get("Expenditure");
             Object[] expenditureKeys = expenditureData.keySet().toArray();
@@ -55,7 +55,7 @@ public class DataManage {
             Main.jsonData.remove("Expenditure");
             Main.jsonData.put("Expenditure", new LinkedHashMap<String,Integer>());
             for (Object key : expenditureKeys2) {
-                ((LinkedHashMap<String,Integer>) Main.jsonData.get("Expenditure")).put((String) key, (Integer) ((Long) expenditureData.get(key)).intValue());
+                ((LinkedHashMap<String,Integer>) Main.jsonData.get("Expenditure")).put((String) key, ((Long) expenditureData.get(key)).intValue());
             }
             System.out.println("Loaded Successfully");
         } catch(Exception e) {
