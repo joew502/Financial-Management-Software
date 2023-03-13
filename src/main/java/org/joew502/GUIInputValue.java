@@ -31,8 +31,8 @@ public class GUIInputValue {
                     String typeKey = incomeTypeLabel.getText();
                     int currentValue = Integer.parseInt(((LinkedHashMap<String, Integer>) Main.jsonData.get(currentInOrExp)).get(typeKey).toString());
                     ((LinkedHashMap<String, Integer>) Main.jsonData.get(currentInOrExp)).put(typeKey, currentValue+addValue);
-                    Main.guiMain.guiTypeSelect.refreshData(currentInOrExp);
-                    Main.guiMain.crd.show(Main.guiMain.cPane, "typeSelect");
+                    Main.guiMain.guiInOrExp.refreshData();
+                    Main.guiMain.crd.show(Main.guiMain.cPane, "inOrExp");
                 } catch (Exception NumberFormatException) {
                     JOptionPane.showMessageDialog(Main.guiMain,"Please enter a suitable integer");
                 }

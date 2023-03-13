@@ -7,7 +7,6 @@ public class GUIMain extends JFrame {
     public CardLayout crd;
     public Container cPane;
     public GUIInOrExp guiInOrExp;
-    public GUITypeSelect guiTypeSelect;
     public GUIInputValue guiInputValue;
     public GUIAddType guiAddType;
     public GUIMain(){
@@ -19,14 +18,8 @@ public class GUIMain extends JFrame {
         GUIMainMenu guiMainMenu = new GUIMainMenu();
         cPane.add("mainMenu", guiMainMenu.mainPanel);
 
-        GUIInOrExpMenu guiInOrExpMenu = new GUIInOrExpMenu();
-        cPane.add("inOrExpMenu", guiInOrExpMenu.mainPanel);
-
         guiInOrExp = new GUIInOrExp();
         cPane.add("inOrExp", guiInOrExp.mainPanel);
-
-        guiTypeSelect = new GUITypeSelect();
-        cPane.add("typeSelect", guiTypeSelect.mainPanel);
 
         guiInputValue = new GUIInputValue();
         cPane.add("inputValue", guiInputValue.mainPanel);
