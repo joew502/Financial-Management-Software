@@ -10,7 +10,6 @@ public class GUIMainMenu {
     public JPanel mainPanel;
     private JButton loadDataButton;
     private JButton saveDataButton;
-    private JButton inputInOrExpButton;
     private JButton displayInAndExpButton;
     private JButton exitButton;
     private JPanel buttonPanel;
@@ -28,12 +27,6 @@ public class GUIMainMenu {
         @Override
         public void actionPerformed(ActionEvent e) {
             DataManage.save("program_data.ser");
-        }
-    });
-    inputInOrExpButton.addActionListener(new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            Main.guiMain.crd.show(Main.guiMain.cPane, "inOrExpMenu");
         }
     });
     displayInAndExpButton.addActionListener(new ActionListener() {
