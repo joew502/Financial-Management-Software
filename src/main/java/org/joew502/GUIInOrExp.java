@@ -1,7 +1,5 @@
 package org.joew502;
 
-import org.json.simple.JSONObject;
-
 import javax.swing.*;
 import javax.swing.table.*;
 import java.awt.event.ActionEvent;
@@ -28,18 +26,22 @@ public class GUIInOrExp {
 
         Object[] incomeKeys = ((LinkedHashMap<String,Integer>) Main.jsonData.get("Income")).keySet().toArray();
         DefaultTableModel incomeModel = new DefaultTableModel();
-        incomeModel.setColumnIdentifiers(new Object[]{"Income Type", "Amount"});
+        incomeModel.setColumnIdentifiers(new Object[]{"Income Type", "Amount", ""});
         for (Object incomeKey:incomeKeys) {
-            incomeModel.addRow(new Object[]{incomeKey, ((LinkedHashMap<String,Integer>) Main.jsonData.get("Income")).get(incomeKey)});
+            incomeModel.addRow(new Object[]{incomeKey, ((LinkedHashMap<String,Integer>) Main.jsonData.get("Income")).get(incomeKey), "View+Edit"});
         }
         incomeTable.setModel(incomeModel);
+        incomeTable.getColumn(incomeTable.getColumnName(2)).setCellRenderer(new TableButtonCellRender());
+        incomeTable.getColumn(incomeTable.getColumnName(2)).setCellEditor(new TableButtonCellEditor("Income", incomeKeys));
 
         Object[] expenditureKeys = ((LinkedHashMap<String,Integer>) Main.jsonData.get("Expenditure")).keySet().toArray();
         DefaultTableModel expenditureModel = new DefaultTableModel();
-        expenditureModel.setColumnIdentifiers(new Object[]{"Expenditure Type", "Amount"});
+        expenditureModel.setColumnIdentifiers(new Object[]{"Expenditure Type", "Amount", ""});
         for (Object expenditureKey:expenditureKeys) {
-            expenditureModel.addRow(new Object[]{expenditureKey, ((LinkedHashMap<String,Integer>) Main.jsonData.get("Expenditure")).get(expenditureKey)});
+            expenditureModel.addRow(new Object[]{expenditureKey, ((LinkedHashMap<String,Integer>) Main.jsonData.get("Expenditure")).get(expenditureKey), "View+Edit"});
         }
         expenditureTable.setModel(expenditureModel);
+        expenditureTable.getColumn(incomeTable.getColumnName(2)).setCellRenderer(new TableButtonCellRender());
+        expenditureTable.getColumn(incomeTable.getColumnName(2)).setCellEditor(new TableButtonCellEditor("Expenditure", incomeKeys));
     }
 }

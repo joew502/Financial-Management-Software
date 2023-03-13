@@ -19,7 +19,8 @@ public class GUIInputValue {
         returnButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Main.guiMain.crd.show(Main.guiMain.cPane, "typeSelect");
+                Main.guiMain.guiInOrExp.refreshData();
+                Main.guiMain.crd.show(Main.guiMain.cPane, "inOrExp");
             }
         });
         submitButton.addActionListener(new ActionListener() {
