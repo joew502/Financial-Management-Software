@@ -11,6 +11,8 @@ public class GUIInOrExp {
     private JButton returnButton;
     private JTable incomeTable;
     private JTable expenditureTable;
+    private JButton addIncTypeButton;
+    private JButton addExpTypeButton;
 
     public GUIInOrExp(){
 
@@ -18,6 +20,20 @@ public class GUIInOrExp {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Main.guiMain.crd.show(Main.guiMain.cPane, "mainMenu");
+            }
+        });
+        addIncTypeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Main.guiMain.guiAddType.refreshData("Income");
+                Main.guiMain.crd.show(Main.guiMain.cPane, "addType");
+            }
+        });
+        addExpTypeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Main.guiMain.guiAddType.refreshData("Expenditure");
+                Main.guiMain.crd.show(Main.guiMain.cPane, "addType");
             }
         });
     }
@@ -42,6 +58,6 @@ public class GUIInOrExp {
         }
         expenditureTable.setModel(expenditureModel);
         expenditureTable.getColumn(incomeTable.getColumnName(2)).setCellRenderer(new TableButtonCellRender());
-        expenditureTable.getColumn(incomeTable.getColumnName(2)).setCellEditor(new TableButtonCellEditor("Expenditure", incomeKeys));
+        expenditureTable.getColumn(incomeTable.getColumnName(2)).setCellEditor(new TableButtonCellEditor("Expenditure", expenditureKeys));
     }
 }
