@@ -1,7 +1,5 @@
 package org.joew502;
 
-import org.json.simple.JSONObject;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,7 +16,7 @@ public class GUIAddType {
         returnButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Main.guiMain.crd.show(Main.guiMain.cPane, "inOrExp");
+                Main.guiMain.crd.show(Main.guiMain.cPane, "incAndExp");
             }
         });
         submitButton.addActionListener(new ActionListener() {
@@ -31,8 +29,8 @@ public class GUIAddType {
                         JOptionPane.showMessageDialog(Main.guiMain,"This income type already exists");
                     } else {
                         ((LinkedHashMap<String,Integer>) Main.jsonData.get(currentInOrExp)).put(addTypeName, 0);
-                        Main.guiMain.guiInOrExp.refreshData();
-                        Main.guiMain.crd.show(Main.guiMain.cPane, "inOrExp");
+                        Main.guiMain.guiIncAndExp.refreshData();
+                        Main.guiMain.crd.show(Main.guiMain.cPane, "incAndExp");
                     }
                 } catch (Exception NumberFormatException) {
                     JOptionPane.showMessageDialog(Main.guiMain,"Please enter a suitable string");
@@ -40,9 +38,9 @@ public class GUIAddType {
             }
         });
     }
-    public void refreshData(String inOrExp) {
-        currentInOrExp = inOrExp;
-        addTypeLabel.setText("Add "+inOrExp+" Type");
+    public void refreshData(String incOrExp) {
+        currentInOrExp = incOrExp;
+        addTypeLabel.setText("Add "+incOrExp+" Type");
         addTypeField.setText("");
     }
 }

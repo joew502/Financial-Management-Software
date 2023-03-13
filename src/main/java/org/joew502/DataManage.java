@@ -38,24 +38,45 @@ public class DataManage {
         try {
             Object obj = jsonParser.parse(new FileReader(filePath));
             Main.jsonData = (JSONObject) obj;
+
             JSONObject incomeData = (JSONObject) Main.jsonData.get("Income");
             Object[] incomeKeys = incomeData.keySet().toArray();
             List<Object> incomeKeys2 = new ArrayList<>(Arrays.asList(incomeKeys));
             Collections.reverse(incomeKeys2);
-            Main.jsonData.remove("Income");
-            Main.jsonData.put("Income", new LinkedHashMap<String,Integer>());
-            for (Object key : incomeKeys2) {
-                ((LinkedHashMap<String,Integer>) Main.jsonData.get("Income")).put((String) key, ((Long) incomeData.get(key)).intValue());
+            LinkedHashMap<String,LinkedHashMap<String,Integer>> newIncomeData = new LinkedHashMap<String,LinkedHashMap<String,Integer>>();
+            for (Object incomeKey:incomeKeys2) {
+                newIncomeData.put((String) incomeKey, new LinkedHashMap<String,Integer>());
+                JSONObject incomeKeyDetail = (JSONObject) incomeData.get(incomeKey);
+                Object[] incomeDetailKeys = incomeKeyDetail.keySet().toArray();
+                List<Object> incomeDetailKeys2 = new ArrayList<>(Arrays.asList(incomeDetailKeys));
+                Collections.reverse(incomeDetailKeys2);
+                LinkedHashMap<String,Integer> newIncomeKeyDetail = newIncomeData.get(incomeKey);
+                for (Object incomeDetailKey:incomeDetailKeys2) {
+                    newIncomeKeyDetail.put((String) incomeDetailKey, ((Long) incomeKeyDetail.get(incomeDetailKey)).intValue());
+                }
             }
+            Main.jsonData.remove("Income");
+            Main.jsonData.put("Income", newIncomeData);
+
             JSONObject expenditureData = (JSONObject) Main.jsonData.get("Expenditure");
             Object[] expenditureKeys = expenditureData.keySet().toArray();
             List<Object> expenditureKeys2 = new ArrayList<>(Arrays.asList(expenditureKeys));
             Collections.reverse(expenditureKeys2);
-            Main.jsonData.remove("Expenditure");
-            Main.jsonData.put("Expenditure", new LinkedHashMap<String,Integer>());
-            for (Object key : expenditureKeys2) {
-                ((LinkedHashMap<String,Integer>) Main.jsonData.get("Expenditure")).put((String) key, ((Long) expenditureData.get(key)).intValue());
+            LinkedHashMap<String,LinkedHashMap<String,Integer>> newExpenditureData = new LinkedHashMap<String,LinkedHashMap<String,Integer>>();
+            for (Object expenditureKey:expenditureKeys2) {
+                newExpenditureData.put((String) expenditureKey, new LinkedHashMap<String,Integer>());
+                JSONObject expenditureKeyDetail = (JSONObject) expenditureData.get(expenditureKey);
+                Object[] detailKeys = expenditureKeyDetail.keySet().toArray();
+                List<Object> detailKeys2 = new ArrayList<>(Arrays.asList(detailKeys));
+                Collections.reverse(detailKeys2);
+                LinkedHashMap<String,Integer> newExpenditureKeyDetail = newExpenditureData.get(expenditureKey);
+                for (Object detailKey:detailKeys2) {
+                    newExpenditureKeyDetail.put((String) detailKey, ((Long) expenditureKeyDetail.get(detailKey)).intValue());
+                }
             }
+            Main.jsonData.remove("Expenditure");
+            Main.jsonData.put("Expenditure", newExpenditureData);
+
             System.out.println("Loaded Successfully");
         } catch(Exception e) {
             e.printStackTrace();

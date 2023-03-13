@@ -6,7 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedHashMap;
 
-public class GUIInOrExp {
+public class GUIIncAndExp {
     public JPanel mainPanel;
     private JButton returnButton;
     private JTable incomeTable;
@@ -14,7 +14,7 @@ public class GUIInOrExp {
     private JButton addIncTypeButton;
     private JButton addExpTypeButton;
 
-    public GUIInOrExp(){
+    public GUIIncAndExp(){
 
         returnButton.addActionListener(new ActionListener() {
             @Override
@@ -48,7 +48,7 @@ public class GUIInOrExp {
         }
         incomeTable.setModel(incomeModel);
         incomeTable.getColumn(incomeTable.getColumnName(2)).setCellRenderer(new TableButtonCellRender());
-        incomeTable.getColumn(incomeTable.getColumnName(2)).setCellEditor(new TableButtonCellEditor("Income", incomeKeys));
+        incomeTable.getColumn(incomeTable.getColumnName(2)).setCellEditor(new TableButtonCellEditor("Type", "Income", incomeKeys));
 
         Object[] expenditureKeys = ((LinkedHashMap<String,Integer>) Main.jsonData.get("Expenditure")).keySet().toArray();
         DefaultTableModel expenditureModel = new DefaultTableModel();
@@ -58,6 +58,6 @@ public class GUIInOrExp {
         }
         expenditureTable.setModel(expenditureModel);
         expenditureTable.getColumn(incomeTable.getColumnName(2)).setCellRenderer(new TableButtonCellRender());
-        expenditureTable.getColumn(incomeTable.getColumnName(2)).setCellEditor(new TableButtonCellEditor("Expenditure", expenditureKeys));
+        expenditureTable.getColumn(incomeTable.getColumnName(2)).setCellEditor(new TableButtonCellEditor("Type", "Expenditure", expenditureKeys));
     }
 }

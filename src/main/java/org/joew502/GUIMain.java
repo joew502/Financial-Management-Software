@@ -6,9 +6,10 @@ import java.awt.*;
 public class GUIMain extends JFrame {
     public CardLayout crd;
     public Container cPane;
-    public GUIInOrExp guiInOrExp;
+    public GUIIncAndExp guiIncAndExp;
     public GUIInputValue guiInputValue;
     public GUIAddType guiAddType;
+    public GUIIncOrExpDetail guiIncOrExpDetail;
     public GUIMain(){
 
         cPane = getContentPane();
@@ -18,14 +19,17 @@ public class GUIMain extends JFrame {
         GUIMainMenu guiMainMenu = new GUIMainMenu();
         cPane.add("mainMenu", guiMainMenu.mainPanel);
 
-        guiInOrExp = new GUIInOrExp();
-        cPane.add("inOrExp", guiInOrExp.mainPanel);
+        guiIncAndExp = new GUIIncAndExp();
+        cPane.add("incAndExp", guiIncAndExp.mainPanel);
 
         guiInputValue = new GUIInputValue();
         cPane.add("inputValue", guiInputValue.mainPanel);
 
         guiAddType = new GUIAddType();
         cPane.add("addType", guiAddType.mainPanel);
+
+        guiIncOrExpDetail = new GUIIncOrExpDetail();
+        cPane.add("incOrExpDetail", guiIncOrExpDetail.mainPanel);
 
         //Image icon = Toolkit.getDefaultToolkit().getImage("fms_icon_small.png");
         //setIconImage(icon);

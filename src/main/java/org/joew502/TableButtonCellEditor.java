@@ -7,25 +7,37 @@ import java.awt.event.ActionListener;
 
 public class TableButtonCellEditor extends DefaultCellEditor {
 
-    String inOrExp;
-    Object[] typeKeys;
+    String typeOrDetail;
+    String incOrExp;
+    Object[] keys;
 
-    public TableButtonCellEditor(String inOrExp, Object[] typeKeys) {
+    public TableButtonCellEditor(String typeOrDetail, String incOrExp, Object[] keys) {
         super(new JCheckBox());
-        this.inOrExp = inOrExp;
-        this.typeKeys = typeKeys;
+        this.typeOrDetail = typeOrDetail;
+        this.incOrExp = incOrExp;
+        this.keys = keys;
     }
 
     @Override
     public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
         JButton button = new JButton();
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Main.guiMain.guiInputValue.refreshData(inOrExp, (String) typeKeys[row]);
-                Main.guiMain.crd.show(Main.guiMain.cPane, "inputValue");
-            }
-        });
+        if (typeOrDetail.equals("Type")) {
+            button.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    Main.guiMain.guiInputValue.refreshData(incOrExp, (String) keys[row]);
+                    Main.guiMain.crd.show(Main.guiMain.cPane, "incOrExpDetail");
+                }
+            });
+        } else {
+            button.addActionListener(new ActionListener() { // TODO Update
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    Main.guiMain.guiInputValue.refreshData(incOrExp, (String) keys[row]);
+                    Main.guiMain.crd.show(Main.guiMain.cPane, "inputValue");
+                }
+            });
+        }
         return button;
     }
 }

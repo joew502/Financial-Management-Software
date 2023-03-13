@@ -19,8 +19,8 @@ public class GUIInputValue {
         returnButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Main.guiMain.guiInOrExp.refreshData();
-                Main.guiMain.crd.show(Main.guiMain.cPane, "inOrExp");
+                Main.guiMain.guiIncAndExp.refreshData();
+                Main.guiMain.crd.show(Main.guiMain.cPane, "incAndExp");
             }
         });
         submitButton.addActionListener(new ActionListener() {
@@ -31,19 +31,19 @@ public class GUIInputValue {
                     String typeKey = incomeTypeLabel.getText();
                     int currentValue = Integer.parseInt(((LinkedHashMap<String, Integer>) Main.jsonData.get(currentInOrExp)).get(typeKey).toString());
                     ((LinkedHashMap<String, Integer>) Main.jsonData.get(currentInOrExp)).put(typeKey, currentValue+addValue);
-                    Main.guiMain.guiInOrExp.refreshData();
-                    Main.guiMain.crd.show(Main.guiMain.cPane, "inOrExp");
+                    Main.guiMain.guiIncAndExp.refreshData();
+                    Main.guiMain.crd.show(Main.guiMain.cPane, "incAndExp");
                 } catch (Exception NumberFormatException) {
                     JOptionPane.showMessageDialog(Main.guiMain,"Please enter a suitable integer");
                 }
             }
         });
     }
-    public void refreshData(String inOrExp, String typeKey) {
-        currentInOrExp = inOrExp;
+    public void refreshData(String incOrExp, String typeKey) {
+        currentInOrExp = incOrExp;
         valueField.setText("");
-        inputLabel.setText("Input "+inOrExp);
+        inputLabel.setText("Input "+incOrExp);
         incomeTypeLabel.setText(typeKey);
-        valueLabel.setText("Current Value: "+((LinkedHashMap<String, Integer>) Main.jsonData.get(inOrExp)).get(typeKey));
+        valueLabel.setText("Current Value: "+((LinkedHashMap<String, Integer>) Main.jsonData.get(incOrExp)).get(typeKey));
     }
 }
