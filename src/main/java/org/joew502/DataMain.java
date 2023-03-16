@@ -28,18 +28,18 @@ public class DataMain {
     public Collection<Integer> getValues(String incOrExp, String typeKey) {
         return getHash(incOrExp,typeKey).values();
     }
-    public Integer getValue(String incOrExp, String typeKey, String detailKey) {
+    public int getValue(String incOrExp, String typeKey, String detailKey) {
         return getHash(incOrExp, typeKey).get(detailKey);
     }
-    public Integer getTotal(String incOrExp, String typeKey) {
-        Integer total = 0;
-        for (Integer value:getValues(incOrExp,typeKey)) {
+    public int getTotal(String incOrExp, String typeKey) {
+        int total = 0;
+        for (int value:getValues(incOrExp,typeKey)) {
             total += value;
         }
         return total;
     }
-    public Integer getTotal(String incOrExp) {
-        Integer total = 0;
+    public int getTotal(String incOrExp) {
+        int total = 0;
         for (Object typeKey:getKeys(incOrExp)) {
             total += getTotal(incOrExp, (String) typeKey);
         }

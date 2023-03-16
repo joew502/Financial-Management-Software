@@ -44,7 +44,12 @@ public class GUIIncAndExp {
     public void refreshData() {
         updateTables(incomeTable,"Income");
         updateTables(expenditureTable, "Expenditure");
-        //LinkedHashMap<String,LinkedHashMap<String,Integer>> incOrExpData = (LinkedHashMap<String,LinkedHashMap<String,Integer>>) Main.jsonData.get(incOrExp);
+        int incomeTotal = Main.dataMain.getTotal("Income");
+        int expenditureTotal = Main.dataMain.getTotal("Expenditure");
+        int balanceTotal = incomeTotal-expenditureTotal;
+        balanceLabel.setText("Balance: £"+balanceTotal);
+        incomeLabel.setText("Income: £"+incomeTotal);
+        expenditureLabel.setText("Expenditure: £"+expenditureTotal);
     }
 
     private void updateTables(JTable dataTable, String incOrExp) {
