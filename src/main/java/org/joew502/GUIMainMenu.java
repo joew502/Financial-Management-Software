@@ -7,38 +7,33 @@ import java.awt.event.ActionListener;
 import static java.lang.System.exit;
 
 public class GUIMainMenu {
+    public JPanel mainPanel;
     private JButton loadDataButton;
     private JButton saveDataButton;
-    private JButton inputInOrExpButton;
     private JButton displayInAndExpButton;
     private JButton exitButton;
-    public JPanel mainPanel;
     private JPanel buttonPanel;
+    private JButton loadDataJSONButton;
+    private JButton saveDataJSONButton;
 
     public GUIMainMenu() {
     loadDataButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            DataManage.load("program_data.json");
+            DataManage.load("program_data.ser");
         }
     });
     saveDataButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            DataManage.save("program_data.json");
-        }
-    });
-    inputInOrExpButton.addActionListener(new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            Main.guiMain.crd.show(Main.guiMain.cPane, "inOrExpMenu");
+            DataManage.save("program_data.ser");
         }
     });
     displayInAndExpButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            Main.guiMain.guiInOrExp.refreshData();
-            Main.guiMain.crd.show(Main.guiMain.cPane, "inOrExp");
+            Main.guiMain.guiIncAndExp.refreshData();
+            Main.guiMain.crd.show(Main.guiMain.cPane, "incAndExp");
         }
     });
     exitButton.addActionListener(new ActionListener() {
@@ -47,5 +42,17 @@ public class GUIMainMenu {
             exit(0);
         }
     });
-}
+        loadDataJSONButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DataManage.loadJson("program_data.json");
+            }
+        });
+        saveDataJSONButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DataManage.saveJson("program_data.json");
+            }
+        });
+    }
 }

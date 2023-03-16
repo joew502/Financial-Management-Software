@@ -6,10 +6,11 @@ import java.awt.*;
 public class GUIMain extends JFrame {
     public CardLayout crd;
     public Container cPane;
-    public GUIInOrExp guiInOrExp;
-    public GUITypeSelect guiTypeSelect;
-    public GUIInputValue guiInputValue;
+    public GUIIncAndExp guiIncAndExp;
+    public GUIEditDetail guiEditDetail;
     public GUIAddType guiAddType;
+    public GUIIncOrExpDetail guiIncOrExpDetail;
+    public GUIAddDetail guiAddDetail;
     public GUIMain(){
 
         cPane = getContentPane();
@@ -19,25 +20,27 @@ public class GUIMain extends JFrame {
         GUIMainMenu guiMainMenu = new GUIMainMenu();
         cPane.add("mainMenu", guiMainMenu.mainPanel);
 
-        GUIInOrExpMenu guiInOrExpMenu = new GUIInOrExpMenu();
-        cPane.add("inOrExpMenu", guiInOrExpMenu.mainPanel);
+        guiIncAndExp = new GUIIncAndExp();
+        cPane.add("incAndExp", guiIncAndExp.mainPanel);
 
-        guiInOrExp = new GUIInOrExp();
-        cPane.add("inOrExp", guiInOrExp.mainPanel);
-
-        guiTypeSelect = new GUITypeSelect();
-        cPane.add("typeSelect", guiTypeSelect.mainPanel);
-
-        guiInputValue = new GUIInputValue();
-        cPane.add("inputValue", guiInputValue.mainPanel);
+        guiEditDetail = new GUIEditDetail();
+        cPane.add("editDetail", guiEditDetail.mainPanel);
 
         guiAddType = new GUIAddType();
         cPane.add("addType", guiAddType.mainPanel);
 
-        //ImageIcon img = new ImageIcon("");
-        //mainMenu.setIconImage(img.getImage());
+        guiIncOrExpDetail = new GUIIncOrExpDetail();
+        cPane.add("incOrExpDetail", guiIncOrExpDetail.mainPanel);
+
+        guiAddDetail = new GUIAddDetail();
+        cPane.add("addDetail", guiAddDetail.mainPanel);
+
+        //Image icon = Toolkit.getDefaultToolkit().getImage("fms_icon_small.png");
+        //setIconImage(icon);
+        //ImageIcon img = new ImageIcon("fms_icon_small.png");
+        //setIconImage(img.getImage());
         setTitle("Financial Management Software");
-        setBounds(200,200,600,400);
+        setBounds(200,200,1000,600);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }

@@ -1,10 +1,9 @@
 package org.joew502;
 
-import org.json.simple.JSONObject;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.LinkedHashMap;
 
 public class GUIAddType {
     public JPanel mainPanel;
@@ -12,12 +11,12 @@ public class GUIAddType {
     private JButton returnButton;
     private JButton submitButton;
     private JTextField addTypeField;
-    private String currentInOrExp;
+    private String currentIncOrExp;
     public GUIAddType() {
         returnButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Main.guiMain.crd.show(Main.guiMain.cPane, "typeSelect");
+                Main.guiMain.crd.show(Main.guiMain.cPane, "incAndExp");
             }
         });
         submitButton.addActionListener(new ActionListener() {
@@ -25,23 +24,23 @@ public class GUIAddType {
             public void actionPerformed(ActionEvent e) {
                 try {
                     String addTypeName = addTypeField.getText();
-                    JSONObject incomeData = (JSONObject) Main.jsonData.get(currentInOrExp);
-                    if (incomeData.containsKey(addTypeName)) {
-                        JOptionPane.showMessageDialog(Main.guiMain,"This income type already exists");
+                    LinkedHashMap<String,LinkedHashMap<String,Integer>> incOrExpData = (LinkedHashMap<String,LinkedHashMap<String,Integer>>) Main.jsonData.get(currentIncOrExp);
+                    if (incOrExpData.containsKey(addTypeName)) {
+                        JOptionPane.showMessageDialog(Main.guiMain,"This "+currentIncOrExp+" type already exists");
                     } else {
-                        ((JSONObject) Main.jsonData.get(currentInOrExp)).put(addTypeName, 0);
-                        Main.guiMain.guiTypeSelect.refreshData(currentInOrExp);
-                        Main.guiMain.crd.show(Main.guiMain.cPane, "typeSelect");
+                        incOrExpData.put(addTypeName, new LinkedHashMap<String,Integer>());
+                        Main.guiMain.guiIncAndExp.refreshData();
+                        Main.guiMain.crd.show(Main.guiMain.cPane, "incAndExp");
                     }
-                } catch (Exception NumberFormatException) {
+                } catch (Exception exception) {
                     JOptionPane.showMessageDialog(Main.guiMain,"Please enter a suitable string");
                 }
             }
         });
     }
-    public void refreshData(String inOrExp) {
-        currentInOrExp = inOrExp;
-        addTypeLabel.setText("Add "+inOrExp+" Type");
+    public void refreshData(String incOrExp) {
+        currentIncOrExp = incOrExp;
+        addTypeLabel.setText("Add "+incOrExp+" Type");
         addTypeField.setText("");
     }
 }
