@@ -33,7 +33,7 @@ public class GUIMainMenu {
         @Override
         public void actionPerformed(ActionEvent e) {
             Main.guiMain.guiIncAndExp.refreshData();
-            Main.guiMain.crd.show(Main.guiMain.cPane, "inOrExp");
+            Main.guiMain.crd.show(Main.guiMain.cPane, "incAndExp");
         }
     });
     exitButton.addActionListener(new ActionListener() {

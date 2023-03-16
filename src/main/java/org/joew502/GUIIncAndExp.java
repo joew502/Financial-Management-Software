@@ -39,25 +39,25 @@ public class GUIIncAndExp {
     }
 
     public void refreshData() {
+        updateTables(incomeTable,"Income");
+        updateTables(expenditureTable, "Expenditure");
+    }
 
-        Object[] incomeKeys = ((LinkedHashMap<String,Integer>) Main.jsonData.get("Income")).keySet().toArray();
-        DefaultTableModel incomeModel = new DefaultTableModel();
-        incomeModel.setColumnIdentifiers(new Object[]{"Income Type", "Amount", ""});
-        for (Object incomeKey:incomeKeys) {
-            incomeModel.addRow(new Object[]{incomeKey, ((LinkedHashMap<String,Integer>) Main.jsonData.get("Income")).get(incomeKey), "View+Edit"});
+    private void updateTables(JTable dataTable, String incOrExp) {
+        LinkedHashMap<String,LinkedHashMap<String,Integer>> incOrExpData = (LinkedHashMap<String,LinkedHashMap<String,Integer>>) Main.jsonData.get(incOrExp);
+        Object[] mainKeys = incOrExpData.keySet().toArray();
+        DefaultTableModel dataTableModel = new DefaultTableModel();
+        dataTableModel.setColumnIdentifiers(new Object[]{incOrExp+" Type", "Amount", ""});
+        for (Object mainKey:mainKeys) {
+            LinkedHashMap<String,Integer> typeData = incOrExpData.get((String) mainKey);
+            Integer typeTotal = 0;
+            for (Integer detailKey:typeData.values()) {
+                typeTotal += detailKey;
+            }
+            dataTableModel.addRow(new Object[]{mainKey, typeTotal, "View+Edit"});
         }
-        incomeTable.setModel(incomeModel);
-        incomeTable.getColumn(incomeTable.getColumnName(2)).setCellRenderer(new TableButtonCellRender());
-        incomeTable.getColumn(incomeTable.getColumnName(2)).setCellEditor(new TableButtonCellEditor("Type", "Income", incomeKeys));
-
-        Object[] expenditureKeys = ((LinkedHashMap<String,Integer>) Main.jsonData.get("Expenditure")).keySet().toArray();
-        DefaultTableModel expenditureModel = new DefaultTableModel();
-        expenditureModel.setColumnIdentifiers(new Object[]{"Expenditure Type", "Amount", ""});
-        for (Object expenditureKey:expenditureKeys) {
-            expenditureModel.addRow(new Object[]{expenditureKey, ((LinkedHashMap<String,Integer>) Main.jsonData.get("Expenditure")).get(expenditureKey), "View+Edit"});
-        }
-        expenditureTable.setModel(expenditureModel);
-        expenditureTable.getColumn(incomeTable.getColumnName(2)).setCellRenderer(new TableButtonCellRender());
-        expenditureTable.getColumn(incomeTable.getColumnName(2)).setCellEditor(new TableButtonCellEditor("Type", "Expenditure", expenditureKeys));
+        dataTable.setModel(dataTableModel);
+        dataTable.getColumn(incomeTable.getColumnName(2)).setCellRenderer(new TableButtonCellRender("View+Edit"));
+        dataTable.getColumn(incomeTable.getColumnName(2)).setCellEditor(new TableButtonCellEditor("Type", incOrExp, mainKeys));
     }
 }

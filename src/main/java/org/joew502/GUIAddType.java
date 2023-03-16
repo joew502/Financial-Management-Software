@@ -24,11 +24,11 @@ public class GUIAddType {
             public void actionPerformed(ActionEvent e) {
                 try {
                     String addTypeName = addTypeField.getText();
-                    LinkedHashMap<String,Integer> incomeData = (LinkedHashMap<String,Integer>) Main.jsonData.get(currentInOrExp);
-                    if (incomeData.containsKey(addTypeName)) {
-                        JOptionPane.showMessageDialog(Main.guiMain,"This income type already exists");
+                    LinkedHashMap<String,LinkedHashMap<String,Integer>> incOrExpData = (LinkedHashMap<String,LinkedHashMap<String,Integer>>) Main.jsonData.get(currentInOrExp);
+                    if (incOrExpData.containsKey(addTypeName)) {
+                        JOptionPane.showMessageDialog(Main.guiMain,"This "+currentInOrExp+" type already exists");
                     } else {
-                        ((LinkedHashMap<String,Integer>) Main.jsonData.get(currentInOrExp)).put(addTypeName, 0);
+                        incOrExpData.put(addTypeName, new LinkedHashMap<String,Integer>());
                         Main.guiMain.guiIncAndExp.refreshData();
                         Main.guiMain.crd.show(Main.guiMain.cPane, "incAndExp");
                     }

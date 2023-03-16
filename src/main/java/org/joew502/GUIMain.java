@@ -7,7 +7,7 @@ public class GUIMain extends JFrame {
     public CardLayout crd;
     public Container cPane;
     public GUIIncAndExp guiIncAndExp;
-    public GUIInputValue guiInputValue;
+    public GUIEditDetail guiEditDetail;
     public GUIAddType guiAddType;
     public GUIIncOrExpDetail guiIncOrExpDetail;
     public GUIMain(){
@@ -22,8 +22,8 @@ public class GUIMain extends JFrame {
         guiIncAndExp = new GUIIncAndExp();
         cPane.add("incAndExp", guiIncAndExp.mainPanel);
 
-        guiInputValue = new GUIInputValue();
-        cPane.add("inputValue", guiInputValue.mainPanel);
+        guiEditDetail = new GUIEditDetail();
+        cPane.add("editDetail", guiEditDetail.mainPanel);
 
         guiAddType = new GUIAddType();
         cPane.add("addType", guiAddType.mainPanel);
@@ -36,7 +36,7 @@ public class GUIMain extends JFrame {
         //ImageIcon img = new ImageIcon("fms_icon_small.png");
         //setIconImage(img.getImage());
         setTitle("Financial Management Software");
-        setBounds(200,200,600,400);
+        setBounds(200,200,1000,600);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
