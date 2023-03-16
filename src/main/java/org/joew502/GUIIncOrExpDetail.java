@@ -12,6 +12,8 @@ public class GUIIncOrExpDetail {
     private JButton returnButton;
     private JButton addButton;
     private JTable detailTable;
+    private String currentIncOrExp;
+    private String currentType;
 
     public GUIIncOrExpDetail() {
         returnButton.addActionListener(new ActionListener() {
@@ -24,11 +26,15 @@ public class GUIIncOrExpDetail {
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                Main.guiMain.guiAddDetail.refreshData(currentIncOrExp, currentType);
+                Main.guiMain.crd.show(Main.guiMain.cPane, "addDetail");
             }
         });
     }
     public void refreshData(String incOrExp, String key) {
+        currentIncOrExp = incOrExp;
+        currentType = key;
+
         detailLabel.setText(incOrExp+" Detail: "+key);
 
         LinkedHashMap<String,Integer> detailData = ((LinkedHashMap<String,LinkedHashMap<String,Integer>>) Main.jsonData.get(incOrExp)).get(key);

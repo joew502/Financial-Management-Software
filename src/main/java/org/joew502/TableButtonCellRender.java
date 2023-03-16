@@ -5,7 +5,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 
 public class TableButtonCellRender extends DefaultTableCellRenderer {
-    private String buttonText = null;
+    private String buttonText;
     public TableButtonCellRender(String buttonText){
         this.buttonText = buttonText;
     }

@@ -10,6 +10,7 @@ public class GUIMain extends JFrame {
     public GUIEditDetail guiEditDetail;
     public GUIAddType guiAddType;
     public GUIIncOrExpDetail guiIncOrExpDetail;
+    public GUIAddDetail guiAddDetail;
     public GUIMain(){
 
         cPane = getContentPane();
@@ -30,6 +31,9 @@ public class GUIMain extends JFrame {
 
         guiIncOrExpDetail = new GUIIncOrExpDetail();
         cPane.add("incOrExpDetail", guiIncOrExpDetail.mainPanel);
+
+        guiAddDetail = new GUIAddDetail();
+        cPane.add("addDetail", guiAddDetail.mainPanel);
 
         //Image icon = Toolkit.getDefaultToolkit().getImage("fms_icon_small.png");
         //setIconImage(icon);

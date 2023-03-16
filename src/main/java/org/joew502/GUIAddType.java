@@ -11,7 +11,7 @@ public class GUIAddType {
     private JButton returnButton;
     private JButton submitButton;
     private JTextField addTypeField;
-    private String currentInOrExp;
+    private String currentIncOrExp;
     public GUIAddType() {
         returnButton.addActionListener(new ActionListener() {
             @Override
@@ -24,22 +24,22 @@ public class GUIAddType {
             public void actionPerformed(ActionEvent e) {
                 try {
                     String addTypeName = addTypeField.getText();
-                    LinkedHashMap<String,LinkedHashMap<String,Integer>> incOrExpData = (LinkedHashMap<String,LinkedHashMap<String,Integer>>) Main.jsonData.get(currentInOrExp);
+                    LinkedHashMap<String,LinkedHashMap<String,Integer>> incOrExpData = (LinkedHashMap<String,LinkedHashMap<String,Integer>>) Main.jsonData.get(currentIncOrExp);
                     if (incOrExpData.containsKey(addTypeName)) {
-                        JOptionPane.showMessageDialog(Main.guiMain,"This "+currentInOrExp+" type already exists");
+                        JOptionPane.showMessageDialog(Main.guiMain,"This "+currentIncOrExp+" type already exists");
                     } else {
                         incOrExpData.put(addTypeName, new LinkedHashMap<String,Integer>());
                         Main.guiMain.guiIncAndExp.refreshData();
                         Main.guiMain.crd.show(Main.guiMain.cPane, "incAndExp");
                     }
-                } catch (Exception NumberFormatException) {
+                } catch (Exception exception) {
                     JOptionPane.showMessageDialog(Main.guiMain,"Please enter a suitable string");
                 }
             }
         });
     }
     public void refreshData(String incOrExp) {
-        currentInOrExp = incOrExp;
+        currentIncOrExp = incOrExp;
         addTypeLabel.setText("Add "+incOrExp+" Type");
         addTypeField.setText("");
     }
