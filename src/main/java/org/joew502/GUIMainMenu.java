@@ -12,21 +12,21 @@ public class GUIMainMenu {
     private JButton saveDataButton;
     private JButton displayInAndExpButton;
     private JButton exitButton;
-    private JPanel buttonPanel;
     private JButton loadDataJSONButton;
     private JButton saveDataJSONButton;
+    private JLabel resultLabel;
 
     public GUIMainMenu() {
     loadDataButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            DataManage.load("program_data.ser");
+            resultLabel.setText(Main.dataMain.load("program_data.ser"));
         }
     });
     saveDataButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            DataManage.save("program_data.ser");
+            resultLabel.setText(Main.dataMain.save("program_data.ser"));
         }
     });
     displayInAndExpButton.addActionListener(new ActionListener() {
@@ -45,13 +45,13 @@ public class GUIMainMenu {
         loadDataJSONButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                DataManage.loadJson("program_data.json");
+                Main.dataMain.loadJson("program_data.json");
             }
         });
         saveDataJSONButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                DataManage.saveJson("program_data.json");
+                Main.dataMain.saveJson("program_data.json");
             }
         });
     }

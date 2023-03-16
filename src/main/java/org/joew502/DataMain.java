@@ -2,44 +2,82 @@ package org.joew502;
 
 import java.io.*;
 import java.util.*;
-
 import org.json.simple.*;
 import org.json.simple.parser.*;
 
-public class DataManage {
-    public static void load(String filePath){
+//@SuppressWarnings("unchecked")
+public class DataMain {
+    private JSONObject jsonData;
+    public DataMain() {
+        jsonData = new JSONObject();
+        jsonData.put("Income", new LinkedHashMap<String,Integer>());
+        jsonData.put("Expenditure", new LinkedHashMap<String,Integer>());
+    }
+    public LinkedHashMap<String,LinkedHashMap<String,Integer>> getHash(String incOrExp) {
+        return (LinkedHashMap<String,LinkedHashMap<String,Integer>>) jsonData.get(incOrExp);
+    }
+    public LinkedHashMap<String,Integer> getHash(String incOrExp, String typeKey) {
+        return getHash(incOrExp).get(typeKey);
+    }
+    public Object[] getKeys(String incOrExp, String typeKey) {
+        return getHash(incOrExp, typeKey).keySet().toArray();
+    }
+    public Object[] getKeys(String incOrExp) {
+        return getHash(incOrExp).keySet().toArray();
+    }
+    public Collection<Integer> getValues(String incOrExp, String typeKey) {
+        return getHash(incOrExp,typeKey).values();
+    }
+    public Integer getValue(String incOrExp, String typeKey, String detailKey) {
+        return getHash(incOrExp, typeKey).get(detailKey);
+    }
+    public Integer getTotal(String incOrExp, String typeKey) {
+        Integer total = 0;
+        for (Integer value:getValues(incOrExp,typeKey)) {
+            total += value;
+        }
+        return total;
+    }
+    public Integer getTotal(String incOrExp) {
+        Integer total = 0;
+        for (Object typeKey:getKeys(incOrExp)) {
+            total += getTotal(incOrExp, (String) typeKey);
+        }
+        return total;
+    }
+    public String load(String filePath){
         try {
             FileInputStream fileIn = new FileInputStream(filePath);
             ObjectInputStream in = new ObjectInputStream(fileIn);
-            Main.jsonData = (JSONObject) in.readObject();
+            jsonData = (JSONObject) in.readObject();
             in.close();
             fileIn.close();
-            System.out.println("Loaded Successfully");
+            return "Loaded Successfully";
         } catch(Exception e) {
             e.printStackTrace();
-            System.out.println("Load Failed");
+            return "Load Failed";
         }
     }
-    public static void save(String filePath){
+    public String save(String filePath){
         try {
             FileOutputStream fileOut = new FileOutputStream(filePath);
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
-            out.writeObject(Main.jsonData);
+            out.writeObject(jsonData);
             out.close();
             fileOut.close();
-            System.out.println("Saved Successfully");
+            return "Saved Successfully";
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("Save Failed");
+            return "Save Failed";
         }
     }
-    public static void loadJson(String filePath){ //TODO: Remove dev tools
+    public void loadJson(String filePath){ //TODO: Remove dev tools
         JSONParser jsonParser = new JSONParser();
         try {
             Object obj = jsonParser.parse(new FileReader(filePath));
-            Main.jsonData = (JSONObject) obj;
+            jsonData = (JSONObject) obj;
 
-            JSONObject incomeData = (JSONObject) Main.jsonData.get("Income");
+            JSONObject incomeData = (JSONObject) jsonData.get("Income");
             Object[] incomeKeys = incomeData.keySet().toArray();
             List<Object> incomeKeys2 = new ArrayList<>(Arrays.asList(incomeKeys));
             Collections.reverse(incomeKeys2);
@@ -55,10 +93,10 @@ public class DataManage {
                     newIncomeKeyDetail.put((String) incomeDetailKey, ((Long) incomeKeyDetail.get(incomeDetailKey)).intValue());
                 }
             }
-            Main.jsonData.remove("Income");
-            Main.jsonData.put("Income", newIncomeData);
+            jsonData.remove("Income");
+            jsonData.put("Income", newIncomeData);
 
-            JSONObject expenditureData = (JSONObject) Main.jsonData.get("Expenditure");
+            JSONObject expenditureData = (JSONObject) jsonData.get("Expenditure");
             Object[] expenditureKeys = expenditureData.keySet().toArray();
             List<Object> expenditureKeys2 = new ArrayList<>(Arrays.asList(expenditureKeys));
             Collections.reverse(expenditureKeys2);
@@ -74,8 +112,8 @@ public class DataManage {
                     newExpenditureKeyDetail.put((String) detailKey, ((Long) expenditureKeyDetail.get(detailKey)).intValue());
                 }
             }
-            Main.jsonData.remove("Expenditure");
-            Main.jsonData.put("Expenditure", newExpenditureData);
+            jsonData.remove("Expenditure");
+            jsonData.put("Expenditure", newExpenditureData);
 
             System.out.println("Loaded Successfully");
         } catch(Exception e) {
@@ -83,10 +121,10 @@ public class DataManage {
             System.out.println("Load Failed");
         }
     }
-    public static void saveJson(String filePath){ //TODO: Remove dev tools
+    public void saveJson(String filePath){ //TODO: Remove dev tools
         try {
             FileWriter file = new FileWriter(filePath);
-            file.write(Main.jsonData.toJSONString());
+            file.write(jsonData.toJSONString());
             file.close();
             System.out.println("Saved Successfully");
         } catch (IOException e) {

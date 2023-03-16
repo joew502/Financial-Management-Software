@@ -29,7 +29,7 @@ public class GUIEditDetail {
             public void actionPerformed(ActionEvent e) {
                 try {
                     int addValue = Integer.parseInt(valueField.getText());
-                    LinkedHashMap<String,Integer> typeData = ((LinkedHashMap<String,LinkedHashMap<String,Integer>>) Main.jsonData.get(currentIncOrExp)).get(currentTypeKey);
+                    LinkedHashMap<String,Integer> typeData = Main.dataMain.getHash(currentIncOrExp, currentTypeKey);
                     int currentValue = typeData.get(currentDetailKey);
                     typeData.put(currentDetailKey, currentValue+addValue);
                     Main.guiMain.guiIncOrExpDetail.refreshData(currentIncOrExp, currentTypeKey);
@@ -46,6 +46,6 @@ public class GUIEditDetail {
         currentDetailKey = detailKey;
         valueField.setText("");
         typeLabel.setText(incOrExp+">"+typeKey+">"+detailKey);
-        valueLabel.setText("Current Value: "+((LinkedHashMap<String,LinkedHashMap<String, Integer>>) Main.jsonData.get(incOrExp)).get(typeKey).get(detailKey));
+        valueLabel.setText("Current Value: "+Main.dataMain.getValue(incOrExp, typeKey, detailKey));
     }
 }

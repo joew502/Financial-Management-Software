@@ -13,6 +13,9 @@ public class GUIIncAndExp {
     private JTable expenditureTable;
     private JButton addIncTypeButton;
     private JButton addExpTypeButton;
+    private JLabel balanceLabel;
+    private JLabel incomeLabel;
+    private JLabel expenditureLabel;
 
     public GUIIncAndExp(){
 
@@ -41,23 +44,18 @@ public class GUIIncAndExp {
     public void refreshData() {
         updateTables(incomeTable,"Income");
         updateTables(expenditureTable, "Expenditure");
+        //LinkedHashMap<String,LinkedHashMap<String,Integer>> incOrExpData = (LinkedHashMap<String,LinkedHashMap<String,Integer>>) Main.jsonData.get(incOrExp);
     }
 
     private void updateTables(JTable dataTable, String incOrExp) {
-        LinkedHashMap<String,LinkedHashMap<String,Integer>> incOrExpData = (LinkedHashMap<String,LinkedHashMap<String,Integer>>) Main.jsonData.get(incOrExp);
-        Object[] mainKeys = incOrExpData.keySet().toArray();
+        Object[] typeKeys = Main.dataMain.getKeys(incOrExp);
         DefaultTableModel dataTableModel = new DefaultTableModel();
         dataTableModel.setColumnIdentifiers(new Object[]{incOrExp+" Type", "Amount", ""});
-        for (Object mainKey:mainKeys) {
-            LinkedHashMap<String,Integer> typeData = incOrExpData.get((String) mainKey);
-            Integer typeTotal = 0;
-            for (Integer detailKey:typeData.values()) {
-                typeTotal += detailKey;
-            }
-            dataTableModel.addRow(new Object[]{mainKey, typeTotal, "View+Edit"});
+        for (Object mainKey:typeKeys) {
+            dataTableModel.addRow(new Object[]{mainKey, Main.dataMain.getTotal(incOrExp, (String) mainKey), "View+Edit"});
         }
         dataTable.setModel(dataTableModel);
         dataTable.getColumn(incomeTable.getColumnName(2)).setCellRenderer(new TableButtonCellRender("View+Edit"));
-        dataTable.getColumn(incomeTable.getColumnName(2)).setCellEditor(new TableButtonCellEditor("Type", incOrExp, mainKeys));
+        dataTable.getColumn(incomeTable.getColumnName(2)).setCellEditor(new TableButtonCellEditor("Type", incOrExp, typeKeys));
     }
 }

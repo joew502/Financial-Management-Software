@@ -28,7 +28,7 @@ public class GUIAddDetail {
                 try {
                     String addDetailName = nameField.getText();
                     Integer addDetailValue = Integer.parseInt(valueField.getText());
-                    LinkedHashMap<String,Integer> typeData = ((LinkedHashMap<String,LinkedHashMap<String,Integer>>) Main.jsonData.get(currentIncOrExp)).get(currentType);
+                    LinkedHashMap<String,Integer> typeData = Main.dataMain.getHash(currentIncOrExp, currentType);
                     if (typeData.containsKey(addDetailName)) {
                         JOptionPane.showMessageDialog(Main.guiMain,"This detail already exists in "+currentIncOrExp+">"+currentType);
                     } else {
