@@ -28,14 +28,14 @@ public class GUIEditDetail {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    int addValue = Integer.parseInt(valueField.getText());
-                    LinkedHashMap<String,Integer> typeData = Main.dataMain.getHash(currentIncOrExp, currentTypeKey);
-                    int currentValue = typeData.get(currentDetailKey);
+                    float addValue = Float.parseFloat(valueField.getText());
+                    LinkedHashMap<String,Float> typeData = Main.dataMain.getHash(currentIncOrExp, currentTypeKey);
+                    float currentValue = typeData.get(currentDetailKey);
                     typeData.put(currentDetailKey, currentValue+addValue);
                     Main.guiMain.guiIncOrExpDetail.refreshData(currentIncOrExp, currentTypeKey);
                     Main.guiMain.crd.show(Main.guiMain.cPane, "incOrExpDetail");
                 } catch (Exception NumberFormatException) {
-                    JOptionPane.showMessageDialog(Main.guiMain,"Please enter a suitable integer");
+                    JOptionPane.showMessageDialog(Main.guiMain,"Please enter a suitable float");
                 }
             }
         });
@@ -46,6 +46,6 @@ public class GUIEditDetail {
         currentDetailKey = detailKey;
         valueField.setText("");
         typeLabel.setText(incOrExp+">"+typeKey+">"+detailKey);
-        valueLabel.setText("Current Value: "+Main.dataMain.getValue(incOrExp, typeKey, detailKey));
+        valueLabel.setText("Current Value: "+ String.format("%.2f", Main.dataMain.getValue(incOrExp, typeKey, detailKey)));
     }
 }

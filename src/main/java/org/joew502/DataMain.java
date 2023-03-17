@@ -10,13 +10,14 @@ public class DataMain {
     private JSONObject jsonData;
     public DataMain() {
         jsonData = new JSONObject();
-        jsonData.put("Income", new LinkedHashMap<String,Integer>());
-        jsonData.put("Expenditure", new LinkedHashMap<String,Integer>());
+        jsonData.put("Income", new LinkedHashMap<String, Float>());
+        jsonData.put("Expenditure", new LinkedHashMap<String,Float>());
     }
-    public LinkedHashMap<String,LinkedHashMap<String,Integer>> getHash(String incOrExp) {
-        return (LinkedHashMap<String,LinkedHashMap<String,Integer>>) jsonData.get(incOrExp);
+    public LinkedHashMap<String,LinkedHashMap<String,Float>> getHash(String incOrExp) {
+        return (LinkedHashMap<String,LinkedHashMap<String,Float>>) jsonData.get(incOrExp);
     }
-    public LinkedHashMap<String,Integer> getHash(String incOrExp, String typeKey) {
+    public LinkedHashMap<String,Float
+            > getHash(String incOrExp, String typeKey) {
         return getHash(incOrExp).get(typeKey);
     }
     public Object[] getKeys(String incOrExp, String typeKey) {
@@ -25,21 +26,22 @@ public class DataMain {
     public Object[] getKeys(String incOrExp) {
         return getHash(incOrExp).keySet().toArray();
     }
-    public Collection<Integer> getValues(String incOrExp, String typeKey) {
+    public Collection<Float
+            > getValues(String incOrExp, String typeKey) {
         return getHash(incOrExp,typeKey).values();
     }
-    public int getValue(String incOrExp, String typeKey, String detailKey) {
+    public float getValue(String incOrExp, String typeKey, String detailKey) {
         return getHash(incOrExp, typeKey).get(detailKey);
     }
-    public int getTotal(String incOrExp, String typeKey) {
-        int total = 0;
-        for (int value:getValues(incOrExp,typeKey)) {
+    public float getTotal(String incOrExp, String typeKey) {
+        float total = 0;
+        for (float value:getValues(incOrExp,typeKey)) {
             total += value;
         }
         return total;
     }
-    public int getTotal(String incOrExp) {
-        int total = 0;
+    public float getTotal(String incOrExp) {
+        float total = 0;
         for (Object typeKey:getKeys(incOrExp)) {
             total += getTotal(incOrExp, (String) typeKey);
         }
@@ -81,16 +83,19 @@ public class DataMain {
             Object[] incomeKeys = incomeData.keySet().toArray();
             List<Object> incomeKeys2 = new ArrayList<>(Arrays.asList(incomeKeys));
             Collections.reverse(incomeKeys2);
-            LinkedHashMap<String,LinkedHashMap<String,Integer>> newIncomeData = new LinkedHashMap<String,LinkedHashMap<String,Integer>>();
+            LinkedHashMap<String,LinkedHashMap<String,Float
+                    >> newIncomeData = new LinkedHashMap<String,LinkedHashMap<String,Float>>();
             for (Object incomeKey:incomeKeys2) {
-                newIncomeData.put((String) incomeKey, new LinkedHashMap<String,Integer>());
+                newIncomeData.put((String) incomeKey, new LinkedHashMap<String,Float>());
                 JSONObject incomeKeyDetail = (JSONObject) incomeData.get(incomeKey);
                 Object[] incomeDetailKeys = incomeKeyDetail.keySet().toArray();
                 List<Object> incomeDetailKeys2 = new ArrayList<>(Arrays.asList(incomeDetailKeys));
                 Collections.reverse(incomeDetailKeys2);
-                LinkedHashMap<String,Integer> newIncomeKeyDetail = newIncomeData.get(incomeKey);
+                LinkedHashMap<String,Float
+                        > newIncomeKeyDetail = newIncomeData.get(incomeKey);
                 for (Object incomeDetailKey:incomeDetailKeys2) {
-                    newIncomeKeyDetail.put((String) incomeDetailKey, ((Long) incomeKeyDetail.get(incomeDetailKey)).intValue());
+                    newIncomeKeyDetail.put((String) incomeDetailKey,
+                            ((Long) incomeKeyDetail.get(incomeDetailKey)).floatValue());
                 }
             }
             jsonData.remove("Income");
@@ -100,16 +105,18 @@ public class DataMain {
             Object[] expenditureKeys = expenditureData.keySet().toArray();
             List<Object> expenditureKeys2 = new ArrayList<>(Arrays.asList(expenditureKeys));
             Collections.reverse(expenditureKeys2);
-            LinkedHashMap<String,LinkedHashMap<String,Integer>> newExpenditureData = new LinkedHashMap<String,LinkedHashMap<String,Integer>>();
+            LinkedHashMap<String,LinkedHashMap<String,Float>> newExpenditureData = new LinkedHashMap<String,
+                    LinkedHashMap<String,Float>>();
             for (Object expenditureKey:expenditureKeys2) {
-                newExpenditureData.put((String) expenditureKey, new LinkedHashMap<String,Integer>());
+                newExpenditureData.put((String) expenditureKey, new LinkedHashMap<String,Float>());
                 JSONObject expenditureKeyDetail = (JSONObject) expenditureData.get(expenditureKey);
                 Object[] detailKeys = expenditureKeyDetail.keySet().toArray();
                 List<Object> detailKeys2 = new ArrayList<>(Arrays.asList(detailKeys));
                 Collections.reverse(detailKeys2);
-                LinkedHashMap<String,Integer> newExpenditureKeyDetail = newExpenditureData.get(expenditureKey);
+                LinkedHashMap<String,Float
+                        > newExpenditureKeyDetail = newExpenditureData.get(expenditureKey);
                 for (Object detailKey:detailKeys2) {
-                    newExpenditureKeyDetail.put((String) detailKey, ((Long) expenditureKeyDetail.get(detailKey)).intValue());
+                    newExpenditureKeyDetail.put((String) detailKey, ((Long) expenditureKeyDetail.get(detailKey)).floatValue());
                 }
             }
             jsonData.remove("Expenditure");

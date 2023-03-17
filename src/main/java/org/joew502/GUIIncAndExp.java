@@ -44,12 +44,12 @@ public class GUIIncAndExp {
     public void refreshData() {
         updateTables(incomeTable,"Income");
         updateTables(expenditureTable, "Expenditure");
-        int incomeTotal = Main.dataMain.getTotal("Income");
-        int expenditureTotal = Main.dataMain.getTotal("Expenditure");
-        int balanceTotal = incomeTotal-expenditureTotal;
-        balanceLabel.setText("Balance: £"+balanceTotal);
-        incomeLabel.setText("Income: £"+incomeTotal);
-        expenditureLabel.setText("Expenditure: £"+expenditureTotal);
+        float incomeTotal = Main.dataMain.getTotal("Income");
+        float expenditureTotal = Main.dataMain.getTotal("Expenditure");
+        float balanceTotal = incomeTotal-expenditureTotal;
+        balanceLabel.setText("Balance: £"+String.format("%.2f", balanceTotal));
+        incomeLabel.setText("Income: £"+String.format("%.2f", incomeTotal));
+        expenditureLabel.setText("Expenditure: £"+String.format("%.2f", expenditureTotal));
     }
 
     private void updateTables(JTable dataTable, String incOrExp) {
@@ -57,7 +57,7 @@ public class GUIIncAndExp {
         DefaultTableModel dataTableModel = new DefaultTableModel();
         dataTableModel.setColumnIdentifiers(new Object[]{incOrExp+" Type", "Amount", ""});
         for (Object mainKey:typeKeys) {
-            dataTableModel.addRow(new Object[]{mainKey, Main.dataMain.getTotal(incOrExp, (String) mainKey), "View+Edit"});
+            dataTableModel.addRow(new Object[]{mainKey, String.format("%.2f", Main.dataMain.getTotal(incOrExp, (String) mainKey)), "View+Edit"});
         }
         dataTable.setModel(dataTableModel);
         dataTable.getColumn(incomeTable.getColumnName(2)).setCellRenderer(new TableButtonCellRender("View+Edit"));

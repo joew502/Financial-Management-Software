@@ -42,7 +42,7 @@ public class GUIIncOrExpDetail {
         detailModel.setColumnIdentifiers(new Object[]{"Income Type", "Amount", ""});
         Object[] detailList = Main.dataMain.getKeys(incOrExp, typeKey);
         for (Object detail:detailList) {
-            detailModel.addRow(new Object[]{detail, Main.dataMain.getValue(incOrExp, typeKey, (String) detail), "Edit"});
+            detailModel.addRow(new Object[]{detail, String.format("%.2f", Main.dataMain.getValue(incOrExp, typeKey, (String) detail)), "Edit"});
         }
         detailTable.setModel(detailModel);
         detailTable.getColumn(detailTable.getColumnName(2)).setCellRenderer(new TableButtonCellRender("Edit"));

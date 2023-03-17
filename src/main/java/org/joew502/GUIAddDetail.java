@@ -27,8 +27,8 @@ public class GUIAddDetail {
             public void actionPerformed(ActionEvent e) {
                 try {
                     String addDetailName = nameField.getText();
-                    Integer addDetailValue = Integer.parseInt(valueField.getText());
-                    LinkedHashMap<String,Integer> typeData = Main.dataMain.getHash(currentIncOrExp, currentType);
+                    float addDetailValue = Float.parseFloat(valueField.getText());
+                    LinkedHashMap<String, Float> typeData = Main.dataMain.getHash(currentIncOrExp, currentType);
                     if (typeData.containsKey(addDetailName)) {
                         JOptionPane.showMessageDialog(Main.guiMain,"This detail already exists in "+currentIncOrExp+">"+currentType);
                     } else {
@@ -37,7 +37,7 @@ public class GUIAddDetail {
                         Main.guiMain.crd.show(Main.guiMain.cPane, "incOrExpDetail");
                     }
                 } catch (Exception exception) {
-                    JOptionPane.showMessageDialog(Main.guiMain,"Please enter a suitable string for the name and integer for the value");
+                    JOptionPane.showMessageDialog(Main.guiMain,"Please enter a suitable string for the name and float for the value");
                 }
             }
         });
