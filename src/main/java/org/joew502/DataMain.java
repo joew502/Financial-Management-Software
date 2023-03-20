@@ -10,28 +10,30 @@ public class DataMain {
     private JSONObject jsonData;
     public DataMain() {
         jsonData = new JSONObject();
-        jsonData.put("Income", new LinkedHashMap<String, Float>());
-        jsonData.put("Expenditure", new LinkedHashMap<String,Float>());
+        jsonData.put("Income", new LinkedHashMap<String, JSONObject>());
+        jsonData.put("Expenditure", new LinkedHashMap<String, JSONObject>());
     }
-    public LinkedHashMap<String,LinkedHashMap<String,Float>> getHash(String incOrExp) {
-        return (LinkedHashMap<String,LinkedHashMap<String,Float>>) jsonData.get(incOrExp);
+    private LinkedHashMap<String, JSONObject> getHash(String incOrExp) {
+        return (LinkedHashMap<String,JSONObject>) jsonData.get(incOrExp);
     }
-    public LinkedHashMap<String,Float
-            > getHash(String incOrExp, String typeKey) {
+    private LinkedHashMap<String, Float> getDetailHash(String incOrExp, String typeKey) {
+        return (LinkedHashMap<String, Float>) getHash(incOrExp).get(typeKey).get("Detail");
+    }
+    private JSONObject getHash(String incOrExp, String typeKey) {
         return getHash(incOrExp).get(typeKey);
     }
     public Object[] getKeys(String incOrExp, String typeKey) {
-        return getHash(incOrExp, typeKey).keySet().toArray();
+        return getDetailHash(incOrExp, typeKey).keySet().toArray();
     }
     public Object[] getKeys(String incOrExp) {
         return getHash(incOrExp).keySet().toArray();
     }
     public Collection<Float
             > getValues(String incOrExp, String typeKey) {
-        return getHash(incOrExp,typeKey).values();
+        return getDetailHash(incOrExp,typeKey).values();
     }
     public float getValue(String incOrExp, String typeKey, String detailKey) {
-        return getHash(incOrExp, typeKey).get(detailKey);
+        return getDetailHash(incOrExp, typeKey).get(detailKey);
     }
     public float getTotal(String incOrExp, String typeKey) {
         float total = 0;
@@ -44,6 +46,40 @@ public class DataMain {
         float total = 0;
         for (Object typeKey:getKeys(incOrExp)) {
             total += getTotal(incOrExp, (String) typeKey);
+        }
+        return total;
+    }
+    public boolean isEmpty() {
+        return getHash("Income").isEmpty() && getHash("Expenditure").isEmpty();
+    }
+    public boolean addType(String incOrExp, String typeKey) {
+        if (getHash(incOrExp).containsKey(typeKey)) {
+            return false;
+        } else {
+            getHash(incOrExp).put(typeKey, new JSONObject());
+            getHash(incOrExp, typeKey).put("Detail", new LinkedHashMap<String, Float>());
+            getHash(incOrExp, typeKey).put("Expected", 0F);
+            return true;
+        }
+    }
+    public void addValue(String incOrExp, String typeKey, String detailKey, float value) {
+        getDetailHash(incOrExp, typeKey).put(detailKey, getValue(incOrExp, typeKey, detailKey)+value);
+    }
+    public boolean addDetail(String incOrExp, String typeKey, String detailKey, float value) {
+        if (getDetailHash(incOrExp, typeKey).containsKey(detailKey)) {
+            return false;
+        } else {
+            getDetailHash(incOrExp, typeKey).put(detailKey, value);
+            return true;
+        }
+    }
+    public float getExpectedValue(String incOrExp, String typeKey) {
+        return (float) getHash(incOrExp, typeKey).get("Expected");
+    }
+    public float getExpectedTotal(String incOrExp) {
+        float total = 0;
+        for (Object typeKey:getKeys(incOrExp)) {
+            total += getExpectedValue(incOrExp, (String) typeKey);
         }
         return total;
     }
@@ -79,48 +115,43 @@ public class DataMain {
             Object obj = jsonParser.parse(new FileReader(filePath));
             jsonData = (JSONObject) obj;
 
-            JSONObject incomeData = (JSONObject) jsonData.get("Income");
-            Object[] incomeKeys = incomeData.keySet().toArray();
-            List<Object> incomeKeys2 = new ArrayList<>(Arrays.asList(incomeKeys));
-            Collections.reverse(incomeKeys2);
-            LinkedHashMap<String,LinkedHashMap<String,Float
-                    >> newIncomeData = new LinkedHashMap<String,LinkedHashMap<String,Float>>();
-            for (Object incomeKey:incomeKeys2) {
-                newIncomeData.put((String) incomeKey, new LinkedHashMap<String,Float>());
-                JSONObject incomeKeyDetail = (JSONObject) incomeData.get(incomeKey);
-                Object[] incomeDetailKeys = incomeKeyDetail.keySet().toArray();
-                List<Object> incomeDetailKeys2 = new ArrayList<>(Arrays.asList(incomeDetailKeys));
-                Collections.reverse(incomeDetailKeys2);
-                LinkedHashMap<String,Float
-                        > newIncomeKeyDetail = newIncomeData.get(incomeKey);
-                for (Object incomeDetailKey:incomeDetailKeys2) {
-                    newIncomeKeyDetail.put((String) incomeDetailKey,
-                            ((Long) incomeKeyDetail.get(incomeDetailKey)).floatValue());
+            String[] incAndExp = new String[] {"Income", "Expenditure"};
+            for (String incOrExp:incAndExp) {
+                JSONObject data = (JSONObject) jsonData.get(incOrExp);
+                Object[] typeKeys = data.keySet().toArray();
+                List<Object> typeKeys2 = new ArrayList<>(Arrays.asList(typeKeys));
+                Collections.reverse(typeKeys2);
+                LinkedHashMap<String,JSONObject> newData = new LinkedHashMap<String,JSONObject>();
+                String[] incomeTypeKeys = new String[] {"Membership", "Fundraising", "Sponsorship", "Other Income"};
+                String[] expenditureTypeKeys = new String[] {"AU Membership", "BUCS Affiliation", "NGB Membership",
+                        "Facility Contribution", "Facility Hire", "Equipment Purchase", "Facility Hire",
+                        "Coaching Costs", "Facility Hire", "Competition Event Costs", "Other Event Costs",
+                        "Other Costs"};
+                if (incOrExp == "Income") {
+                    for (String incomeTypeKey:incomeTypeKeys) {
+                        newData.put(incomeTypeKey, new JSONObject());
+                    }
+                } else {
+                    for (String expTypeKey:expenditureTypeKeys) {
+                        newData.put(expTypeKey, new JSONObject());
+                    }
                 }
-            }
-            jsonData.remove("Income");
-            jsonData.put("Income", newIncomeData);
-
-            JSONObject expenditureData = (JSONObject) jsonData.get("Expenditure");
-            Object[] expenditureKeys = expenditureData.keySet().toArray();
-            List<Object> expenditureKeys2 = new ArrayList<>(Arrays.asList(expenditureKeys));
-            Collections.reverse(expenditureKeys2);
-            LinkedHashMap<String,LinkedHashMap<String,Float>> newExpenditureData = new LinkedHashMap<String,
-                    LinkedHashMap<String,Float>>();
-            for (Object expenditureKey:expenditureKeys2) {
-                newExpenditureData.put((String) expenditureKey, new LinkedHashMap<String,Float>());
-                JSONObject expenditureKeyDetail = (JSONObject) expenditureData.get(expenditureKey);
-                Object[] detailKeys = expenditureKeyDetail.keySet().toArray();
-                List<Object> detailKeys2 = new ArrayList<>(Arrays.asList(detailKeys));
-                Collections.reverse(detailKeys2);
-                LinkedHashMap<String,Float
-                        > newExpenditureKeyDetail = newExpenditureData.get(expenditureKey);
-                for (Object detailKey:detailKeys2) {
-                    newExpenditureKeyDetail.put((String) detailKey, ((Long) expenditureKeyDetail.get(detailKey)).floatValue());
+                for (Object typeKey:typeKeys2) {
+                    //newIncomeData.put((String) incomeKey, new JSONObject());
+                    newData.get(typeKey).put("Detail", new LinkedHashMap<String, Float>());
+                    newData.get(typeKey).put("Expected", ((Double) ((JSONObject) data.get(typeKey)).get("Expected")).floatValue());
+                    JSONObject detail = (JSONObject) ((JSONObject) data.get(typeKey)).get("Detail");
+                    Object[] detailKeys = detail.keySet().toArray();
+                    List<Object> detailKeys2 = new ArrayList<>(Arrays.asList(detailKeys));
+                    Collections.reverse(detailKeys2);
+                    LinkedHashMap<String, Float> newDetail = (LinkedHashMap<String, Float>) newData.get(typeKey).get("Detail");
+                    for (Object incomeDetailKey:detailKeys2) {
+                        newDetail.put((String) incomeDetailKey, ((Double) detail.get(incomeDetailKey)).floatValue());
+                    }
                 }
+                jsonData.remove(incOrExp);
+                jsonData.put(incOrExp, newData);
             }
-            jsonData.remove("Expenditure");
-            jsonData.put("Expenditure", newExpenditureData);
 
             System.out.println("Loaded Successfully");
         } catch(Exception e) {

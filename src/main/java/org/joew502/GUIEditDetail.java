@@ -3,7 +3,6 @@ package org.joew502;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.LinkedHashMap;
 
 public class GUIEditDetail {
     public JPanel mainPanel;
@@ -29,9 +28,7 @@ public class GUIEditDetail {
             public void actionPerformed(ActionEvent e) {
                 try {
                     float addValue = Float.parseFloat(valueField.getText());
-                    LinkedHashMap<String,Float> typeData = Main.dataMain.getHash(currentIncOrExp, currentTypeKey);
-                    float currentValue = typeData.get(currentDetailKey);
-                    typeData.put(currentDetailKey, currentValue+addValue);
+                    Main.dataMain.addValue(currentIncOrExp, currentTypeKey, currentDetailKey, addValue);
                     Main.guiMain.guiIncOrExpDetail.refreshData(currentIncOrExp, currentTypeKey);
                     Main.guiMain.crd.show(Main.guiMain.cPane, "incOrExpDetail");
                 } catch (Exception NumberFormatException) {

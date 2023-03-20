@@ -6,6 +6,7 @@ import java.awt.*;
 public class GUIMain extends JFrame {
     public CardLayout crd;
     public Container cPane;
+    public GUIMainMenu guiMainMenu;
     public GUIIncAndExp guiIncAndExp;
     public GUIEditDetail guiEditDetail;
     public GUIAddType guiAddType;
@@ -17,7 +18,7 @@ public class GUIMain extends JFrame {
         crd = new CardLayout();
         cPane.setLayout(crd);
 
-        GUIMainMenu guiMainMenu = new GUIMainMenu();
+        guiMainMenu = new GUIMainMenu();
         cPane.add("mainMenu", guiMainMenu.mainPanel);
 
         guiIncAndExp = new GUIIncAndExp();

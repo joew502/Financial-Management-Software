@@ -4,7 +4,6 @@ import javax.swing.*;
 import javax.swing.table.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.LinkedHashMap;
 
 public class GUIIncAndExp {
     public JPanel mainPanel;
@@ -16,12 +15,15 @@ public class GUIIncAndExp {
     private JLabel balanceLabel;
     private JLabel incomeLabel;
     private JLabel expenditureLabel;
+    private JButton toggleExpectedTotalsButton;
+    private JButton addDefaultTypesButton;
 
     public GUIIncAndExp(){
 
         returnButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                //Main.guiMain.guiMainMenu.refreshData();
                 Main.guiMain.crd.show(Main.guiMain.cPane, "mainMenu");
             }
         });
@@ -37,6 +39,29 @@ public class GUIIncAndExp {
             public void actionPerformed(ActionEvent e) {
                 Main.guiMain.guiAddType.refreshData("Expenditure");
                 Main.guiMain.crd.show(Main.guiMain.cPane, "addType");
+            }
+        });
+        toggleExpectedTotalsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+        addDefaultTypesButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String[] incomeTypeKeys = new String[] {"Membership", "Fundraising", "Sponsorship", "Other Income"};
+                for (String typeKey:incomeTypeKeys) {
+                    Main.dataMain.addType("Income", typeKey);
+                }
+                String[] expenditureTypeKeys = new String[] {"AU Membership", "BUCS Affiliation", "NGB Membership",
+                        "Facility Contribution", "Facility Hire", "Equipment Purchase", "Facility Hire",
+                        "Coaching Costs", "Facility Hire", "Competition Event Costs", "Other Event Costs",
+                        "Other Costs"};
+                for (String typeKey:expenditureTypeKeys) {
+                    Main.dataMain.addType("Expenditure", typeKey);
+                }
+                refreshData();
             }
         });
     }
@@ -55,12 +80,16 @@ public class GUIIncAndExp {
     private void updateTables(JTable dataTable, String incOrExp) {
         Object[] typeKeys = Main.dataMain.getKeys(incOrExp);
         DefaultTableModel dataTableModel = new DefaultTableModel();
-        dataTableModel.setColumnIdentifiers(new Object[]{incOrExp+" Type", "Amount", ""});
+        dataTableModel.setColumnIdentifiers(new Object[]{incOrExp+" Type", "Amount", "Expected", ""});
         for (Object mainKey:typeKeys) {
-            dataTableModel.addRow(new Object[]{mainKey, String.format("%.2f", Main.dataMain.getTotal(incOrExp, (String) mainKey)), "View+Edit"});
+            dataTableModel.addRow(new Object[]{
+                    mainKey,
+                    "£"+String.format("%.2f", Main.dataMain.getTotal(incOrExp, (String) mainKey)),
+                    "£"+String.format("%.2f", Main.dataMain.getExpectedValue(incOrExp, (String) mainKey)),
+                    "View+Edit"});
         }
         dataTable.setModel(dataTableModel);
-        dataTable.getColumn(incomeTable.getColumnName(2)).setCellRenderer(new TableButtonCellRender("View+Edit"));
-        dataTable.getColumn(incomeTable.getColumnName(2)).setCellEditor(new TableButtonCellEditor("Type", incOrExp, typeKeys));
+        dataTable.getColumn(incomeTable.getColumnName(3)).setCellRenderer(new TableButtonCellRender("View+Edit"));
+        dataTable.getColumn(incomeTable.getColumnName(3)).setCellEditor(new TableButtonCellEditor("Type", incOrExp, typeKeys));
     }
 }

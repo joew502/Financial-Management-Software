@@ -39,10 +39,10 @@ public class GUIIncOrExpDetail {
         detailLabel.setText(incOrExp+" Detail: "+typeKey);
 
         DefaultTableModel detailModel = new DefaultTableModel();
-        detailModel.setColumnIdentifiers(new Object[]{"Income Type", "Amount", ""});
+        detailModel.setColumnIdentifiers(new Object[]{"Income Type", "Amount", "Expected", ""});
         Object[] detailList = Main.dataMain.getKeys(incOrExp, typeKey);
         for (Object detail:detailList) {
-            detailModel.addRow(new Object[]{detail, String.format("%.2f", Main.dataMain.getValue(incOrExp, typeKey, (String) detail)), "Edit"});
+            detailModel.addRow(new Object[]{detail, "£"+String.format("%.2f", Main.dataMain.getValue(incOrExp, typeKey, (String) detail)), "Edit"});
         }
         detailTable.setModel(detailModel);
         detailTable.getColumn(detailTable.getColumnName(2)).setCellRenderer(new TableButtonCellRender("Edit"));
