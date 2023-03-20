@@ -79,7 +79,13 @@ public class DataMain {
     public float getExpectedTotal(String incOrExp) {
         float total = 0;
         for (Object typeKey:getKeys(incOrExp)) {
-            total += getExpectedValue(incOrExp, (String) typeKey);
+            float expectedValue = getExpectedValue(incOrExp, (String) typeKey);
+            float currentValue = getTotal(incOrExp, (String) typeKey);
+            if (currentValue > expectedValue) {
+                total += currentValue;
+            } else {
+                total += expectedValue;
+            }
         }
         return total;
     }

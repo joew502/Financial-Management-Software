@@ -15,7 +15,6 @@ public class GUIIncAndExp {
     private JLabel balanceLabel;
     private JLabel incomeLabel;
     private JLabel expenditureLabel;
-    private JButton toggleExpectedTotalsButton;
     private JButton addDefaultTypesButton;
 
     public GUIIncAndExp(){
@@ -41,12 +40,6 @@ public class GUIIncAndExp {
                 Main.guiMain.crd.show(Main.guiMain.cPane, "addType");
             }
         });
-        toggleExpectedTotalsButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
         addDefaultTypesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -69,12 +62,18 @@ public class GUIIncAndExp {
     public void refreshData() {
         updateTables(incomeTable,"Income");
         updateTables(expenditureTable, "Expenditure");
-        float incomeTotal = Main.dataMain.getTotal("Income");
-        float expenditureTotal = Main.dataMain.getTotal("Expenditure");
-        float balanceTotal = incomeTotal-expenditureTotal;
-        balanceLabel.setText("Balance: £"+String.format("%.2f", balanceTotal));
-        incomeLabel.setText("Income: £"+String.format("%.2f", incomeTotal));
-        expenditureLabel.setText("Expenditure: £"+String.format("%.2f", expenditureTotal));
+        float currentIncTotal = Main.dataMain.getTotal("Income");
+        float currentExpTotal = Main.dataMain.getTotal("Expenditure");
+        float currentBalanceTotal = currentIncTotal-currentExpTotal;
+        float expectedIncTotal = Main.dataMain.getExpectedTotal("Income");
+        float expectedExpTotal = Main.dataMain.getExpectedTotal("Expenditure");
+        float expectedBalanceTotal = expectedIncTotal-expectedExpTotal;
+        balanceLabel.setText("Balance: £"+String.format("%.2f", expectedBalanceTotal)+
+                " (Current: £"+String.format("%.2f", currentBalanceTotal)+")");
+        incomeLabel.setText("Income: £"+String.format("%.2f", expectedIncTotal)+
+                " (Current: £"+String.format("%.2f", currentIncTotal)+")");
+        expenditureLabel.setText("Expenditure: £"+String.format("%.2f", expectedExpTotal)+
+                " (Current: £"+String.format("%.2f", currentExpTotal)+")");
     }
 
     private void updateTables(JTable dataTable, String incOrExp) {

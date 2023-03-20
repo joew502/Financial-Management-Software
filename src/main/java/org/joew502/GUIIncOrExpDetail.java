@@ -13,6 +13,7 @@ public class GUIIncOrExpDetail {
     private JButton returnButton;
     private JButton addButton;
     private JTable detailTable;
+    private JLabel valueLabel;
     private String currentIncOrExp;
     private String currentType;
 
@@ -37,9 +38,11 @@ public class GUIIncOrExpDetail {
         currentType = typeKey;
 
         detailLabel.setText(incOrExp+" Detail: "+typeKey);
+        valueLabel.setText("Current: £"+String.format("%.2f", Main.dataMain.getTotal(incOrExp,typeKey))+
+                "    Expected: £"+String.format("%.2f", Main.dataMain.getExpectedValue(incOrExp,typeKey)));
 
         DefaultTableModel detailModel = new DefaultTableModel();
-        detailModel.setColumnIdentifiers(new Object[]{"Income Type", "Amount", "Expected", ""});
+        detailModel.setColumnIdentifiers(new Object[]{"Income Type", "Amount", ""});
         Object[] detailList = Main.dataMain.getKeys(incOrExp, typeKey);
         for (Object detail:detailList) {
             detailModel.addRow(new Object[]{detail, "£"+String.format("%.2f", Main.dataMain.getValue(incOrExp, typeKey, (String) detail)), "Edit"});
