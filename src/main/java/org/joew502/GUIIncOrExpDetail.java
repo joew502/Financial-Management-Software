@@ -5,6 +5,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedHashMap;
+import java.util.Objects;
 
 public class GUIIncOrExpDetail {
     public JPanel mainPanel;
@@ -12,6 +13,7 @@ public class GUIIncOrExpDetail {
     private JButton returnButton;
     private JButton addButton;
     private JTable detailTable;
+    private JLabel valueLabel;
     private String currentIncOrExp;
     private String currentType;
 
@@ -31,22 +33,22 @@ public class GUIIncOrExpDetail {
             }
         });
     }
-    public void refreshData(String incOrExp, String key) {
+    public void refreshData(String incOrExp, String typeKey) {
         currentIncOrExp = incOrExp;
-        currentType = key;
+        currentType = typeKey;
 
-        detailLabel.setText(incOrExp+" Detail: "+key);
+        detailLabel.setText(incOrExp+" Detail: "+typeKey);
+        valueLabel.setText("Current: £"+String.format("%.2f", Main.dataMain.getTotal(incOrExp,typeKey))+
+                "    Expected: £"+String.format("%.2f", Main.dataMain.getExpectedValue(incOrExp,typeKey)));
 
-        LinkedHashMap<String,Integer> detailData = ((LinkedHashMap<String,LinkedHashMap<String,Integer>>) Main.jsonData.get(incOrExp)).get(key);
-
-        Object[] detailList = detailData.keySet().toArray();
         DefaultTableModel detailModel = new DefaultTableModel();
         detailModel.setColumnIdentifiers(new Object[]{"Income Type", "Amount", ""});
+        Object[] detailList = Main.dataMain.getKeys(incOrExp, typeKey);
         for (Object detail:detailList) {
-            detailModel.addRow(new Object[]{detail, detailData.get(detail), "Edit"});
+            detailModel.addRow(new Object[]{detail, "£"+String.format("%.2f", Main.dataMain.getValue(incOrExp, typeKey, (String) detail)), "Edit"});
         }
         detailTable.setModel(detailModel);
         detailTable.getColumn(detailTable.getColumnName(2)).setCellRenderer(new TableButtonCellRender("Edit"));
-        detailTable.getColumn(detailTable.getColumnName(2)).setCellEditor(new TableButtonCellEditor("Detail", incOrExp, detailList, key));
+        detailTable.getColumn(detailTable.getColumnName(2)).setCellEditor(new TableButtonCellEditor("Detail", incOrExp, detailList, typeKey));
     }
 }

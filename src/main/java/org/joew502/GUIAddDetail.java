@@ -3,7 +3,6 @@ package org.joew502;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.LinkedHashMap;
 
 public class GUIAddDetail {
     public JPanel mainPanel;
@@ -27,17 +26,15 @@ public class GUIAddDetail {
             public void actionPerformed(ActionEvent e) {
                 try {
                     String addDetailName = nameField.getText();
-                    Integer addDetailValue = Integer.parseInt(valueField.getText());
-                    LinkedHashMap<String,Integer> typeData = ((LinkedHashMap<String,LinkedHashMap<String,Integer>>) Main.jsonData.get(currentIncOrExp)).get(currentType);
-                    if (typeData.containsKey(addDetailName)) {
-                        JOptionPane.showMessageDialog(Main.guiMain,"This detail already exists in "+currentIncOrExp+">"+currentType);
-                    } else {
-                        typeData.put(addDetailName, addDetailValue);
+                    float addDetailValue = Float.parseFloat(valueField.getText());
+                    if (Main.dataMain.addDetail(currentIncOrExp, currentType, addDetailName, addDetailValue)) {
                         Main.guiMain.guiIncOrExpDetail.refreshData(currentIncOrExp, currentType);
                         Main.guiMain.crd.show(Main.guiMain.cPane, "incOrExpDetail");
+                    } else {
+                        JOptionPane.showMessageDialog(Main.guiMain,"This detail already exists in "+currentIncOrExp+">"+currentType);
                     }
                 } catch (Exception exception) {
-                    JOptionPane.showMessageDialog(Main.guiMain,"Please enter a suitable string for the name and integer for the value");
+                    JOptionPane.showMessageDialog(Main.guiMain,"Please enter a suitable string for the name and float for the value");
                 }
             }
         });

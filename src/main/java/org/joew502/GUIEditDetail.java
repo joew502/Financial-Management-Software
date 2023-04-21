@@ -3,7 +3,6 @@ package org.joew502;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.LinkedHashMap;
 
 public class GUIEditDetail {
     public JPanel mainPanel;
@@ -28,14 +27,12 @@ public class GUIEditDetail {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    int addValue = Integer.parseInt(valueField.getText());
-                    LinkedHashMap<String,Integer> typeData = ((LinkedHashMap<String,LinkedHashMap<String,Integer>>) Main.jsonData.get(currentIncOrExp)).get(currentTypeKey);
-                    int currentValue = typeData.get(currentDetailKey);
-                    typeData.put(currentDetailKey, currentValue+addValue);
+                    float addValue = Float.parseFloat(valueField.getText());
+                    Main.dataMain.addValue(currentIncOrExp, currentTypeKey, currentDetailKey, addValue);
                     Main.guiMain.guiIncOrExpDetail.refreshData(currentIncOrExp, currentTypeKey);
                     Main.guiMain.crd.show(Main.guiMain.cPane, "incOrExpDetail");
                 } catch (Exception NumberFormatException) {
-                    JOptionPane.showMessageDialog(Main.guiMain,"Please enter a suitable integer");
+                    JOptionPane.showMessageDialog(Main.guiMain,"Please enter a suitable float");
                 }
             }
         });
@@ -46,6 +43,6 @@ public class GUIEditDetail {
         currentDetailKey = detailKey;
         valueField.setText("");
         typeLabel.setText(incOrExp+">"+typeKey+">"+detailKey);
-        valueLabel.setText("Current Value: "+((LinkedHashMap<String,LinkedHashMap<String, Integer>>) Main.jsonData.get(incOrExp)).get(typeKey).get(detailKey));
+        valueLabel.setText("Current Value: "+ String.format("%.2f", Main.dataMain.getValue(incOrExp, typeKey, detailKey)));
     }
 }
