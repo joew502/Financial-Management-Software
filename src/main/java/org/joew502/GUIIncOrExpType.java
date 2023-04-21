@@ -7,13 +7,15 @@ import java.awt.event.ActionListener;
 
 public class GUIIncOrExpType {
     public JPanel mainPanel;
-    private JLabel detailLabel;
+    private JLabel typeLabel;
     private JButton returnButton;
-    private JButton addButton;
+    private JButton addDetailButton;
     private JTable detailTable;
     private JLabel valueLabel;
+    private JButton deleteTypeButton;
+    private JButton toggleFinalButton;
     private String currentIncOrExp;
-    private String currentType;
+    private String currentTypeKey;
 
     public GUIIncOrExpType() {
         returnButton.addActionListener(new ActionListener() {
@@ -23,19 +25,31 @@ public class GUIIncOrExpType {
                 Main.guiMain.crd.show(Main.guiMain.cPane, "incAndExp");
             }
         });
-        addButton.addActionListener(new ActionListener() {
+        addDetailButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Main.guiMain.guiAddDetail.refreshData(currentIncOrExp, currentType);
+                Main.guiMain.guiAddDetail.refreshData(currentIncOrExp, currentTypeKey);
                 Main.guiMain.crd.show(Main.guiMain.cPane, "addDetail");
+            }
+        });
+        deleteTypeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int confirm = JOptionPane.showConfirmDialog(Main.guiMain, "Are you sure you want to delete" +
+                        " this type?", "Confirm Type Deletion", JOptionPane.YES_NO_OPTION);
+                if (confirm == 0) {
+                    Main.dataMain.deleteType(currentIncOrExp, currentTypeKey);
+                    Main.guiMain.guiIncAndExp.refreshData();
+                    Main.guiMain.crd.show(Main.guiMain.cPane, "incAndExp");
+                }
             }
         });
     }
     public void refreshData(String incOrExp, String typeKey) {
         currentIncOrExp = incOrExp;
-        currentType = typeKey;
+        currentTypeKey = typeKey;
 
-        detailLabel.setText(incOrExp+" Type: "+typeKey);
+        typeLabel.setText(incOrExp+" Type: "+typeKey);
         valueLabel.setText("Current: £"+String.format("%.2f", Main.dataMain.getTotal(incOrExp,typeKey))+
                 "    Expected: £"+String.format("%.2f", Main.dataMain.getExpectedValue(incOrExp,typeKey)));
 

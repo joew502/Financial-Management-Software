@@ -63,6 +63,9 @@ public class DataMain {
             return true;
         }
     }
+    public void deleteType(String incOrExp, String typeKey) {
+        getHash(incOrExp).remove(typeKey);
+    }
     public void addValue(String incOrExp, String typeKey, String detailKey, float value) {
         getDetailHash(incOrExp, typeKey).put(detailKey, getValue(incOrExp, typeKey, detailKey)+value);
     }
