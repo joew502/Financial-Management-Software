@@ -63,6 +63,9 @@ public class DataMain {
             return true;
         }
     }
+    public void deleteType(String incOrExp, String typeKey) {
+        getHash(incOrExp).remove(typeKey);
+    }
     public void addValue(String incOrExp, String typeKey, String detailKey, float value) {
         getDetailHash(incOrExp, typeKey).put(detailKey, getValue(incOrExp, typeKey, detailKey)+value);
     }
@@ -73,6 +76,9 @@ public class DataMain {
             getDetailHash(incOrExp, typeKey).put(detailKey, value);
             return true;
         }
+    }
+    public void deleteDetail(String incOrExp, String typeKey, String detailKey) {
+        getDetailHash(incOrExp, typeKey).remove(detailKey);
     }
     public float getExpectedValue(String incOrExp, String typeKey) {
         return (float) getHash(incOrExp, typeKey).get("Expected");
@@ -92,6 +98,19 @@ public class DataMain {
     }
     public boolean getFinal(String incOrExp, String typeKey) {
         return (boolean) getHash(incOrExp, typeKey).get("Final");
+    }
+    public String getFinalStr(String incOrExp, String typeKey) {
+        if (getFinal(incOrExp, typeKey)) {
+            return "True";
+        }
+        return "False";
+    }
+    public void toggleFinal(String incOrExp, String typeKey) {
+        if (getFinal(incOrExp, typeKey)) {
+            getHash(incOrExp, typeKey).put("Final", false);
+        } else {
+            getHash(incOrExp, typeKey).put("Final", true);
+        }
     }
     public String load(String filePath){
         try {

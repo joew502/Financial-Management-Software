@@ -10,7 +10,7 @@ public class GUIMain extends JFrame {
     public GUIIncAndExp guiIncAndExp;
     public GUIEditDetail guiEditDetail;
     public GUIAddType guiAddType;
-    public GUIIncOrExpDetail guiIncOrExpDetail;
+    public GUIIncOrExpType guiIncOrExpType;
     public GUIAddDetail guiAddDetail;
     public GUIMain(){
 
@@ -30,8 +30,8 @@ public class GUIMain extends JFrame {
         guiAddType = new GUIAddType();
         cPane.add("addType", guiAddType.mainPanel);
 
-        guiIncOrExpDetail = new GUIIncOrExpDetail();
-        cPane.add("incOrExpDetail", guiIncOrExpDetail.mainPanel);
+        guiIncOrExpType = new GUIIncOrExpType();
+        cPane.add("incOrExpType", guiIncOrExpType.mainPanel);
 
         guiAddDetail = new GUIAddDetail();
         cPane.add("addDetail", guiAddDetail.mainPanel);
