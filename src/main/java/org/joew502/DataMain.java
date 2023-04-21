@@ -99,6 +99,19 @@ public class DataMain {
     public boolean getFinal(String incOrExp, String typeKey) {
         return (boolean) getHash(incOrExp, typeKey).get("Final");
     }
+    public String getFinalStr(String incOrExp, String typeKey) {
+        if (getFinal(incOrExp, typeKey)) {
+            return "True";
+        }
+        return "False";
+    }
+    public void toggleFinal(String incOrExp, String typeKey) {
+        if (getFinal(incOrExp, typeKey)) {
+            getHash(incOrExp, typeKey).put("Final", false);
+        } else {
+            getHash(incOrExp, typeKey).put("Final", true);
+        }
+    }
     public String load(String filePath){
         try {
             FileInputStream fileIn = new FileInputStream(filePath);

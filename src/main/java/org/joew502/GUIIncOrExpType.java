@@ -44,6 +44,13 @@ public class GUIIncOrExpType {
                 }
             }
         });
+        toggleFinalButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Main.dataMain.toggleFinal(currentIncOrExp, currentTypeKey);
+                Main.guiMain.guiIncOrExpType.refreshData(currentIncOrExp, currentTypeKey);
+            }
+        });
     }
     public void refreshData(String incOrExp, String typeKey) {
         currentIncOrExp = incOrExp;
@@ -51,7 +58,8 @@ public class GUIIncOrExpType {
 
         typeLabel.setText(incOrExp+" Type: "+typeKey);
         valueLabel.setText("Current: £"+String.format("%.2f", Main.dataMain.getTotal(incOrExp,typeKey))+
-                "    Expected: £"+String.format("%.2f", Main.dataMain.getExpectedValue(incOrExp,typeKey)));
+                "    Expected: £"+String.format("%.2f", Main.dataMain.getExpectedValue(incOrExp,typeKey))+
+                "    Final Value: "+Main.dataMain.getFinalStr(currentIncOrExp, currentTypeKey));
 
         DefaultTableModel detailModel = new DefaultTableModel();
         detailModel.setColumnIdentifiers(new Object[]{"Income Detail", "Amount", ""});
