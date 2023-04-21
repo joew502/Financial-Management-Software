@@ -16,6 +16,7 @@ public class GUIIncAndExp {
     private JLabel incomeLabel;
     private JLabel expenditureLabel;
     private JButton addDefaultTypesButton;
+    private JLabel detailLabel;
 
     public GUIIncAndExp(){
 
@@ -68,23 +69,32 @@ public class GUIIncAndExp {
         float expectedIncTotal = Main.dataMain.getExpectedTotal("Income");
         float expectedExpTotal = Main.dataMain.getExpectedTotal("Expenditure");
         float expectedBalanceTotal = expectedIncTotal-expectedExpTotal;
-        balanceLabel.setText("Balance: £"+String.format("%.2f", expectedBalanceTotal)+
-                " (Current: £"+String.format("%.2f", currentBalanceTotal)+")");
+        float minTotal = currentIncTotal-expectedExpTotal;
+        float maxTotal = expectedIncTotal-currentExpTotal;
+        balanceLabel.setText("Balance: £"+String.format("%.2f", expectedBalanceTotal));
         incomeLabel.setText("Income: £"+String.format("%.2f", expectedIncTotal)+
                 " (Current: £"+String.format("%.2f", currentIncTotal)+")");
         expenditureLabel.setText("Expenditure: £"+String.format("%.2f", expectedExpTotal)+
                 " (Current: £"+String.format("%.2f", currentExpTotal)+")");
+        detailLabel.setText("(Current: £"+String.format("%.2f", currentBalanceTotal)+"    Min: £"+
+                String.format("%.2f", minTotal)+"    Max: £"+String.format("%.2f", maxTotal)+")");
     }
 
     private void updateTables(JTable dataTable, String incOrExp) {
         Object[] typeKeys = Main.dataMain.getKeys(incOrExp);
         DefaultTableModel dataTableModel = new DefaultTableModel();
         dataTableModel.setColumnIdentifiers(new Object[]{incOrExp+" Type", "Amount", "Expected", ""});
-        for (Object mainKey:typeKeys) {
+        for (Object typeKey:typeKeys) {
+            String expectedValue;
+            if (Main.dataMain.getFinal(incOrExp, (String) typeKey)) {
+                expectedValue = "Final";
+            } else {
+                expectedValue = "£"+String.format("%.2f", Main.dataMain.getExpectedValue(incOrExp, (String) typeKey));
+            }
             dataTableModel.addRow(new Object[]{
-                    mainKey,
-                    "£"+String.format("%.2f", Main.dataMain.getTotal(incOrExp, (String) mainKey)),
-                    "£"+String.format("%.2f", Main.dataMain.getExpectedValue(incOrExp, (String) mainKey)),
+                    typeKey,
+                    "£"+String.format("%.2f", Main.dataMain.getTotal(incOrExp, (String) typeKey)),
+                    expectedValue,
                     "View+Edit"});
         }
         dataTable.setModel(dataTableModel);

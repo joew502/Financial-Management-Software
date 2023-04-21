@@ -59,6 +59,7 @@ public class DataMain {
             getHash(incOrExp).put(typeKey, new JSONObject());
             getHash(incOrExp, typeKey).put("Detail", new LinkedHashMap<String, Float>());
             getHash(incOrExp, typeKey).put("Expected", 0F);
+            getHash(incOrExp, typeKey).put("Final", false);
             return true;
         }
     }
@@ -81,13 +82,16 @@ public class DataMain {
         for (Object typeKey:getKeys(incOrExp)) {
             float expectedValue = getExpectedValue(incOrExp, (String) typeKey);
             float currentValue = getTotal(incOrExp, (String) typeKey);
-            if (currentValue > expectedValue) {
-                total += currentValue;
-            } else {
+            if (expectedValue > currentValue && !getFinal(incOrExp, (String) typeKey)) {
                 total += expectedValue;
+            } else {
+                total += currentValue;
             }
         }
         return total;
+    }
+    public boolean getFinal(String incOrExp, String typeKey) {
+        return (boolean) getHash(incOrExp, typeKey).get("Final");
     }
     public String load(String filePath){
         try {
@@ -146,6 +150,7 @@ public class DataMain {
                     //newIncomeData.put((String) incomeKey, new JSONObject());
                     newData.get(typeKey).put("Detail", new LinkedHashMap<String, Float>());
                     newData.get(typeKey).put("Expected", ((Double) ((JSONObject) data.get(typeKey)).get("Expected")).floatValue());
+                    newData.get(typeKey).put("Final", ((boolean) ((JSONObject) data.get(typeKey)).get("Final")));
                     JSONObject detail = (JSONObject) ((JSONObject) data.get(typeKey)).get("Detail");
                     Object[] detailKeys = detail.keySet().toArray();
                     List<Object> detailKeys2 = new ArrayList<>(Arrays.asList(detailKeys));
