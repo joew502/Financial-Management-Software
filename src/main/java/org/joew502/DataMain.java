@@ -74,6 +74,9 @@ public class DataMain {
             return true;
         }
     }
+    public void deleteDetail(String incOrExp, String typeKey, String detailKey) {
+        getDetailHash(incOrExp, typeKey).remove(detailKey);
+    }
     public float getExpectedValue(String incOrExp, String typeKey) {
         return (float) getHash(incOrExp, typeKey).get("Expected");
     }
