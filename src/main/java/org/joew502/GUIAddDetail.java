@@ -17,8 +17,8 @@ public class GUIAddDetail {
         returnButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Main.guiMain.guiIncOrExpDetail.refreshData(currentIncOrExp, currentType);
-                Main.guiMain.crd.show(Main.guiMain.cPane, "incOrExpDetail");
+                Main.guiMain.guiIncOrExpType.refreshData(currentIncOrExp, currentType);
+                Main.guiMain.crd.show(Main.guiMain.cPane, "incOrExpType");
             }
         });
         addDetailButton.addActionListener(new ActionListener() {
@@ -28,8 +28,8 @@ public class GUIAddDetail {
                     String addDetailName = nameField.getText();
                     float addDetailValue = Float.parseFloat(valueField.getText());
                     if (Main.dataMain.addDetail(currentIncOrExp, currentType, addDetailName, addDetailValue)) {
-                        Main.guiMain.guiIncOrExpDetail.refreshData(currentIncOrExp, currentType);
-                        Main.guiMain.crd.show(Main.guiMain.cPane, "incOrExpDetail");
+                        Main.guiMain.guiIncOrExpType.refreshData(currentIncOrExp, currentType);
+                        Main.guiMain.crd.show(Main.guiMain.cPane, "incOrExpType");
                     } else {
                         JOptionPane.showMessageDialog(Main.guiMain,"This detail already exists in "+currentIncOrExp+">"+currentType);
                     }

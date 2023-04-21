@@ -31,8 +31,8 @@ public class TableButtonCellEditor extends DefaultCellEditor {
             button.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    Main.guiMain.guiIncOrExpDetail.refreshData(incOrExp, (String) keys[row]);
-                    Main.guiMain.crd.show(Main.guiMain.cPane, "incOrExpDetail");
+                    Main.guiMain.guiIncOrExpType.refreshData(incOrExp, (String) keys[row]);
+                    Main.guiMain.crd.show(Main.guiMain.cPane, "incOrExpType");
                 }
             });
             button.setText("View+Edit");

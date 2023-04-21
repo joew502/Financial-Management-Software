@@ -20,8 +20,8 @@ public class GUIEditDetail {
         returnButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Main.guiMain.guiIncOrExpDetail.refreshData(currentIncOrExp, currentTypeKey);
-                Main.guiMain.crd.show(Main.guiMain.cPane, "incOrExpDetail");
+                Main.guiMain.guiIncOrExpType.refreshData(currentIncOrExp, currentTypeKey);
+                Main.guiMain.crd.show(Main.guiMain.cPane, "incOrExpType");
             }
         });
         submitButton.addActionListener(new ActionListener() {
@@ -30,8 +30,8 @@ public class GUIEditDetail {
                 try {
                     float addValue = Float.parseFloat(valueField.getText());
                     Main.dataMain.addValue(currentIncOrExp, currentTypeKey, currentDetailKey, addValue);
-                    Main.guiMain.guiIncOrExpDetail.refreshData(currentIncOrExp, currentTypeKey);
-                    Main.guiMain.crd.show(Main.guiMain.cPane, "incOrExpDetail");
+                    Main.guiMain.guiIncOrExpType.refreshData(currentIncOrExp, currentTypeKey);
+                    Main.guiMain.crd.show(Main.guiMain.cPane, "incOrExpType");
                 } catch (Exception NumberFormatException) {
                     JOptionPane.showMessageDialog(Main.guiMain,"Please enter a suitable float");
                 }
@@ -44,8 +44,8 @@ public class GUIEditDetail {
                         " this detail?", "Confirm Detail Deletion", JOptionPane.YES_NO_OPTION);
                 if (confirm == 0) {
                     Main.dataMain.deleteDetail(currentIncOrExp, currentTypeKey, currentDetailKey);
-                    Main.guiMain.guiIncOrExpDetail.refreshData(currentIncOrExp, currentTypeKey);
-                    Main.guiMain.crd.show(Main.guiMain.cPane, "incOrExpDetail");
+                    Main.guiMain.guiIncOrExpType.refreshData(currentIncOrExp, currentTypeKey);
+                    Main.guiMain.crd.show(Main.guiMain.cPane, "incOrExpType");
                 }
             }
         });

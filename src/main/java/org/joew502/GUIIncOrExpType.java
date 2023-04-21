@@ -4,10 +4,8 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.LinkedHashMap;
-import java.util.Objects;
 
-public class GUIIncOrExpDetail {
+public class GUIIncOrExpType {
     public JPanel mainPanel;
     private JLabel detailLabel;
     private JButton returnButton;
@@ -17,7 +15,7 @@ public class GUIIncOrExpDetail {
     private String currentIncOrExp;
     private String currentType;
 
-    public GUIIncOrExpDetail() {
+    public GUIIncOrExpType() {
         returnButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -37,12 +35,12 @@ public class GUIIncOrExpDetail {
         currentIncOrExp = incOrExp;
         currentType = typeKey;
 
-        detailLabel.setText(incOrExp+" Detail: "+typeKey);
+        detailLabel.setText(incOrExp+" Type: "+typeKey);
         valueLabel.setText("Current: £"+String.format("%.2f", Main.dataMain.getTotal(incOrExp,typeKey))+
                 "    Expected: £"+String.format("%.2f", Main.dataMain.getExpectedValue(incOrExp,typeKey)));
 
         DefaultTableModel detailModel = new DefaultTableModel();
-        detailModel.setColumnIdentifiers(new Object[]{"Income Type", "Amount", ""});
+        detailModel.setColumnIdentifiers(new Object[]{"Income Detail", "Amount", ""});
         Object[] detailList = Main.dataMain.getKeys(incOrExp, typeKey);
         for (Object detail:detailList) {
             detailModel.addRow(new Object[]{detail, "£"+String.format("%.2f", Main.dataMain.getValue(incOrExp, typeKey, (String) detail)), "Edit"});
