@@ -12,12 +12,12 @@ public class GUIAddDetail {
     private JButton addDetailButton;
     private JLabel typeLabel;
     private String currentIncOrExp;
-    private String currentType;
+    private String currentTypeKey;
     public GUIAddDetail() {
         returnButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Main.guiMain.guiIncOrExpType.refreshData(currentIncOrExp, currentType);
+                Main.guiMain.guiIncOrExpType.refreshData(currentIncOrExp, currentTypeKey);
                 Main.guiMain.crd.show(Main.guiMain.cPane, "incOrExpType");
             }
         });
@@ -27,11 +27,11 @@ public class GUIAddDetail {
                 try {
                     String addDetailName = nameField.getText();
                     float addDetailValue = Float.parseFloat(valueField.getText());
-                    if (Main.dataMain.addDetail(currentIncOrExp, currentType, addDetailName, addDetailValue)) {
-                        Main.guiMain.guiIncOrExpType.refreshData(currentIncOrExp, currentType);
+                    if (Main.dataMain.addDetail(currentIncOrExp, currentTypeKey, addDetailName, addDetailValue)) {
+                        Main.guiMain.guiIncOrExpType.refreshData(currentIncOrExp, currentTypeKey);
                         Main.guiMain.crd.show(Main.guiMain.cPane, "incOrExpType");
                     } else {
-                        JOptionPane.showMessageDialog(Main.guiMain,"This detail already exists in "+currentIncOrExp+">"+currentType);
+                        JOptionPane.showMessageDialog(Main.guiMain,"This detail already exists in "+currentIncOrExp+">"+ currentTypeKey);
                     }
                 } catch (Exception exception) {
                     JOptionPane.showMessageDialog(Main.guiMain,"Please enter a suitable string for the name and float for the value");
@@ -41,7 +41,7 @@ public class GUIAddDetail {
     }
     public void refreshData(String incOrExp, String type) {
         currentIncOrExp = incOrExp;
-        currentType = type;
+        currentTypeKey = type;
         typeLabel.setText(incOrExp+">"+type);
         nameField.setText("");
         valueField.setText("");

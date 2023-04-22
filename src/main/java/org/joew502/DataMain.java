@@ -96,6 +96,9 @@ public class DataMain {
         }
         return total;
     }
+    public void setExpected(String incOrExp, String typeKey, float value) {
+        getHash(incOrExp, typeKey).put("Expected", value);
+    }
     public boolean getFinal(String incOrExp, String typeKey) {
         return (boolean) getHash(incOrExp, typeKey).get("Final");
     }

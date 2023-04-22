@@ -14,6 +14,7 @@ public class GUIIncOrExpType {
     private JLabel valueLabel;
     private JButton deleteTypeButton;
     private JButton toggleFinalButton;
+    private JButton editExpectedButton;
     private String currentIncOrExp;
     private String currentTypeKey;
 
@@ -49,6 +50,13 @@ public class GUIIncOrExpType {
             public void actionPerformed(ActionEvent e) {
                 Main.dataMain.toggleFinal(currentIncOrExp, currentTypeKey);
                 Main.guiMain.guiIncOrExpType.refreshData(currentIncOrExp, currentTypeKey);
+            }
+        });
+        editExpectedButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Main.guiMain.guiSetExpected.refreshData(currentIncOrExp, currentTypeKey);
+                Main.guiMain.crd.show(Main.guiMain.cPane, "setExpected");
             }
         });
     }
