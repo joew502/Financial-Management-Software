@@ -14,13 +14,16 @@ public class GUIMainMenu {
     private JButton exitButton;
     private JButton loadDataJSONButton;
     private JButton saveDataJSONButton;
-    private JLabel resultLabel;
 
     public GUIMainMenu() {
         loadDataButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                resultLabel.setText(Main.dataMain.load("program_data.ser"));
+                if (Main.dataMain.load("program_data.ser")) {
+                    JOptionPane.showMessageDialog(Main.guiMain, "Loaded Successfully");
+                } else {
+                    JOptionPane.showMessageDialog(Main.guiMain, "Loaded Failed - Ensure file format is correct");
+                }
                 /*JFileChooser fileChooser = new JFileChooser(); TODO Remove Dev Tools
                 int option = fileChooser.showOpenDialog(Main.guiMain);
                 if(option == JFileChooser.APPROVE_OPTION){
@@ -33,7 +36,11 @@ public class GUIMainMenu {
         saveDataButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                resultLabel.setText(Main.dataMain.save("program_data.ser"));
+                if (Main.dataMain.save("program_data.ser")) {
+                    JOptionPane.showMessageDialog(Main.guiMain, "Saved Successfully");
+                } else {
+                    JOptionPane.showMessageDialog(Main.guiMain, "Save Failed");
+                }
                 /*JFileChooser fileChooser = new JFileChooser(); TODO Remove Dev Tools
                 int option = fileChooser.showSaveDialog(Main.guiMain);
                 if(option == JFileChooser.APPROVE_OPTION){

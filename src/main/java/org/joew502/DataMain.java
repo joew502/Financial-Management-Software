@@ -115,30 +115,30 @@ public class DataMain {
             getHash(incOrExp, typeKey).put("Final", true);
         }
     }
-    public String load(String filePath){
+    public boolean load(String filePath){
         try {
             FileInputStream fileIn = new FileInputStream(filePath);
             ObjectInputStream in = new ObjectInputStream(fileIn);
             jsonData = (JSONObject) in.readObject();
             in.close();
             fileIn.close();
-            return "Loaded Successfully";
+            return true;
         } catch(Exception e) {
             e.printStackTrace();
-            return "Load Failed";
+            return false;
         }
     }
-    public String save(String filePath){
+    public boolean save(String filePath){
         try {
             FileOutputStream fileOut = new FileOutputStream(filePath);
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             out.writeObject(jsonData);
             out.close();
             fileOut.close();
-            return "Saved Successfully";
+            return true;
         } catch (IOException e) {
             e.printStackTrace();
-            return "Save Failed";
+            return false;
         }
     }
     public void loadJson(String filePath){ //TODO: Remove dev tools
