@@ -3,6 +3,7 @@ package org.joew502;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import static java.lang.System.exit;
 
@@ -19,18 +20,16 @@ public class GUIMainMenu {
         loadDataButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (Main.dataMain.load("program_data.ser")) {
-                    JOptionPane.showMessageDialog(Main.guiMain, "Loaded Successfully");
-                } else {
-                    JOptionPane.showMessageDialog(Main.guiMain, "Loaded Failed - Ensure file format is correct");
-                }
-                /*JFileChooser fileChooser = new JFileChooser(); TODO Remove Dev Tools
+                JFileChooser fileChooser = new JFileChooser(); //TODO Remove Dev Tools
                 int option = fileChooser.showOpenDialog(Main.guiMain);
                 if(option == JFileChooser.APPROVE_OPTION){
                     File file = fileChooser.getSelectedFile();
-                    resultLabel.setText(Main.dataMain.load(file.getPath()));
-                }*/
-                //refreshData();
+                    if (Main.dataMain.load(file.getPath())) {
+                        JOptionPane.showMessageDialog(Main.guiMain, "Loaded Successfully");
+                    } else {
+                        JOptionPane.showMessageDialog(Main.guiMain, "Loaded Failed - Ensure file format is correct");
+                    }
+                }
             }
         });
         saveDataButton.addActionListener(new ActionListener() {

@@ -122,7 +122,10 @@ public class DataMain {
             jsonData = (JSONObject) in.readObject();
             in.close();
             fileIn.close();
-            return true;
+            if (dataStructCheck(jsonData)) {
+                return true;
+            }
+            return false;
         } catch(Exception e) {
             e.printStackTrace();
             return false;
@@ -140,6 +143,44 @@ public class DataMain {
             e.printStackTrace();
             return false;
         }
+    }
+    private boolean dataStructCheck(JSONObject dataFile) {
+        if (!dataFile.containsKey("Income")) {
+            return false;
+        }
+        if (!dataFile.containsKey("Expenditure")) {
+            return false;
+        }
+        String[] incAndExp = new String[] {"Income", "Expenditure"};
+        for (String incOrExp:incAndExp) {
+            LinkedHashMap<String, JSONObject> incOrExpData;
+            try {
+                incOrExpData = (LinkedHashMap<String, JSONObject>) dataFile.get(incOrExp);
+            } catch (Exception e) {
+                return false;
+            }
+            for (String typeKey:incOrExpData.keySet()) {
+                JSONObject typeData = incOrExpData.get(typeKey);
+                String[] typeComponents = new String[] {"Expected", "Final", "Detail"};
+                for (String typeComponent:typeComponents) {
+                    if (!typeData.containsKey(typeComponent)) {
+                        return false;
+                    }
+                }
+                if (!(typeData.get("Expected") instanceof Float)) {
+                    return false;
+                }
+                if (!(typeData.get("Final") instanceof Boolean)) {
+                    return false;
+                }
+                try {
+                    LinkedHashMap<String, Float> detailData = (LinkedHashMap<String, Float>) typeData.get("Detail");
+                } catch (Exception e) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
     public void loadJson(String filePath){ //TODO: Remove dev tools
         JSONParser jsonParser = new JSONParser();
