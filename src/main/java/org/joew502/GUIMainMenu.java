@@ -3,6 +3,7 @@ package org.joew502;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import static java.lang.System.exit;
 
@@ -14,26 +15,36 @@ public class GUIMainMenu {
     private JButton exitButton;
     private JButton loadDataJSONButton;
     private JButton saveDataJSONButton;
-    private JLabel resultLabel;
 
     public GUIMainMenu() {
         loadDataButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                resultLabel.setText(Main.dataMain.load("program_data.ser"));
-                /*JFileChooser fileChooser = new JFileChooser(); TODO Remove Dev Tools
+                if (Main.dataMain.load("program_data.ser")) {
+                    JOptionPane.showMessageDialog(Main.guiMain, "Loaded Successfully");
+                } else {
+                    JOptionPane.showMessageDialog(Main.guiMain, "Loaded Failed - Ensure file format is correct");
+                }
+                /*JFileChooser fileChooser = new JFileChooser(); //TODO Remove Dev Tools
                 int option = fileChooser.showOpenDialog(Main.guiMain);
                 if(option == JFileChooser.APPROVE_OPTION){
                     File file = fileChooser.getSelectedFile();
-                    resultLabel.setText(Main.dataMain.load(file.getPath()));
+                    if (Main.dataMain.load(file.getPath())) {
+                        JOptionPane.showMessageDialog(Main.guiMain, "Loaded Successfully");
+                    } else {
+                        JOptionPane.showMessageDialog(Main.guiMain, "Loaded Failed - Ensure file format is correct");
+                    }
                 }*/
-                //refreshData();
             }
         });
         saveDataButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                resultLabel.setText(Main.dataMain.save("program_data.ser"));
+                if (Main.dataMain.save("program_data.ser")) {
+                    JOptionPane.showMessageDialog(Main.guiMain, "Saved Successfully");
+                } else {
+                    JOptionPane.showMessageDialog(Main.guiMain, "Save Failed");
+                }
                 /*JFileChooser fileChooser = new JFileChooser(); TODO Remove Dev Tools
                 int option = fileChooser.showSaveDialog(Main.guiMain);
                 if(option == JFileChooser.APPROVE_OPTION){
@@ -57,28 +68,17 @@ public class GUIMainMenu {
                 exit(0);
             }
         });
-        loadDataJSONButton.addActionListener(new ActionListener() {
+        loadDataJSONButton.addActionListener(new ActionListener() { // TODO: Remove dev tools
             @Override
             public void actionPerformed(ActionEvent e) {
                 Main.dataMain.loadJson("program_data.json");
-                //refreshData();
             }
         });
-        saveDataJSONButton.addActionListener(new ActionListener() {
+        saveDataJSONButton.addActionListener(new ActionListener() { // TODO: Remove dev tools
             @Override
             public void actionPerformed(ActionEvent e) {
                 Main.dataMain.saveJson("program_data.json");
             }
         });
-        //refreshData();
     }
-    /*public void refreshData() {
-        if (Main.dataMain.isEmpty()) {
-            displayInAndExpButton.setVisible(false);
-            setFinancialPlanButton.setVisible(true);
-        } else {
-            setFinancialPlanButton.setVisible(false);
-            displayInAndExpButton.setVisible(true);
-        }
-    }*/
 }

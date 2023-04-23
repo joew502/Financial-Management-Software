@@ -5,7 +5,7 @@ import java.util.*;
 import org.json.simple.*;
 import org.json.simple.parser.*;
 
-//@SuppressWarnings("unchecked")
+@SuppressWarnings("unchecked")
 public class DataMain {
     private JSONObject jsonData;
     public DataMain() {
@@ -48,9 +48,6 @@ public class DataMain {
             total += getTotal(incOrExp, (String) typeKey);
         }
         return total;
-    }
-    public boolean isEmpty() {
-        return getHash("Income").isEmpty() && getHash("Expenditure").isEmpty();
     }
     public boolean addType(String incOrExp, String typeKey) {
         if (getHash(incOrExp).containsKey(typeKey)) {
@@ -115,31 +112,69 @@ public class DataMain {
             getHash(incOrExp, typeKey).put("Final", true);
         }
     }
-    public String load(String filePath){
+    public boolean load(String filePath){
         try {
             FileInputStream fileIn = new FileInputStream(filePath);
             ObjectInputStream in = new ObjectInputStream(fileIn);
             jsonData = (JSONObject) in.readObject();
             in.close();
             fileIn.close();
-            return "Loaded Successfully";
+            return dataStructCheck(jsonData);
         } catch(Exception e) {
             e.printStackTrace();
-            return "Load Failed";
+            return false;
         }
     }
-    public String save(String filePath){
+    public boolean save(String filePath){
         try {
             FileOutputStream fileOut = new FileOutputStream(filePath);
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             out.writeObject(jsonData);
             out.close();
             fileOut.close();
-            return "Saved Successfully";
+            return true;
         } catch (IOException e) {
             e.printStackTrace();
-            return "Save Failed";
+            return false;
         }
+    }
+    private boolean dataStructCheck(JSONObject dataFile) {
+        if (!dataFile.containsKey("Income")) {
+            return false;
+        }
+        if (!dataFile.containsKey("Expenditure")) {
+            return false;
+        }
+        String[] incAndExp = new String[] {"Income", "Expenditure"};
+        for (String incOrExp:incAndExp) {
+            LinkedHashMap<String, JSONObject> incOrExpData;
+            try {
+                incOrExpData = (LinkedHashMap<String, JSONObject>) dataFile.get(incOrExp);
+            } catch (Exception e) {
+                return false;
+            }
+            for (String typeKey:incOrExpData.keySet()) {
+                JSONObject typeData = incOrExpData.get(typeKey);
+                String[] typeComponents = new String[] {"Expected", "Final", "Detail"};
+                for (String typeComponent:typeComponents) {
+                    if (!typeData.containsKey(typeComponent)) {
+                        return false;
+                    }
+                }
+                if (!(typeData.get("Expected") instanceof Float)) {
+                    return false;
+                }
+                if (!(typeData.get("Final") instanceof Boolean)) {
+                    return false;
+                }
+                try {
+                    LinkedHashMap<String, Float> detailData = (LinkedHashMap<String, Float>) typeData.get("Detail");
+                } catch (Exception e) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
     public void loadJson(String filePath){ //TODO: Remove dev tools
         JSONParser jsonParser = new JSONParser();
@@ -153,13 +188,13 @@ public class DataMain {
                 Object[] typeKeys = data.keySet().toArray();
                 List<Object> typeKeys2 = new ArrayList<>(Arrays.asList(typeKeys));
                 Collections.reverse(typeKeys2);
-                LinkedHashMap<String,JSONObject> newData = new LinkedHashMap<String,JSONObject>();
+                LinkedHashMap<String,JSONObject> newData = new LinkedHashMap<>();
                 String[] incomeTypeKeys = new String[] {"Membership", "Fundraising", "Sponsorship", "Other Income"};
                 String[] expenditureTypeKeys = new String[] {"AU Membership", "BUCS Affiliation", "NGB Membership",
                         "Facility Contribution", "Facility Hire", "Equipment Purchase", "Facility Hire",
                         "Coaching Costs", "Facility Hire", "Competition Event Costs", "Other Event Costs",
                         "Other Costs"};
-                if (incOrExp == "Income") {
+                if (incOrExp.equals("Income")) {
                     for (String incomeTypeKey:incomeTypeKeys) {
                         newData.put(incomeTypeKey, new JSONObject());
                     }
