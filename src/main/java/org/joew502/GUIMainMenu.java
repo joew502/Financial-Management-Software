@@ -20,7 +20,12 @@ public class GUIMainMenu {
         loadDataButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFileChooser fileChooser = new JFileChooser(); //TODO Remove Dev Tools
+                if (Main.dataMain.load("program_data.ser")) {
+                    JOptionPane.showMessageDialog(Main.guiMain, "Loaded Successfully");
+                } else {
+                    JOptionPane.showMessageDialog(Main.guiMain, "Loaded Failed - Ensure file format is correct");
+                }
+                /*JFileChooser fileChooser = new JFileChooser(); //TODO Remove Dev Tools
                 int option = fileChooser.showOpenDialog(Main.guiMain);
                 if(option == JFileChooser.APPROVE_OPTION){
                     File file = fileChooser.getSelectedFile();
@@ -29,7 +34,7 @@ public class GUIMainMenu {
                     } else {
                         JOptionPane.showMessageDialog(Main.guiMain, "Loaded Failed - Ensure file format is correct");
                     }
-                }
+                }*/
             }
         });
         saveDataButton.addActionListener(new ActionListener() {
@@ -63,28 +68,17 @@ public class GUIMainMenu {
                 exit(0);
             }
         });
-        loadDataJSONButton.addActionListener(new ActionListener() {
+        loadDataJSONButton.addActionListener(new ActionListener() { // TODO: Remove dev tools
             @Override
             public void actionPerformed(ActionEvent e) {
                 Main.dataMain.loadJson("program_data.json");
-                //refreshData();
             }
         });
-        saveDataJSONButton.addActionListener(new ActionListener() {
+        saveDataJSONButton.addActionListener(new ActionListener() { // TODO: Remove dev tools
             @Override
             public void actionPerformed(ActionEvent e) {
                 Main.dataMain.saveJson("program_data.json");
             }
         });
-        //refreshData();
     }
-    /*public void refreshData() {
-        if (Main.dataMain.isEmpty()) {
-            displayInAndExpButton.setVisible(false);
-            setFinancialPlanButton.setVisible(true);
-        } else {
-            setFinancialPlanButton.setVisible(false);
-            displayInAndExpButton.setVisible(true);
-        }
-    }*/
 }

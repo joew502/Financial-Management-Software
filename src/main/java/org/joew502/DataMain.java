@@ -5,7 +5,7 @@ import java.util.*;
 import org.json.simple.*;
 import org.json.simple.parser.*;
 
-//@SuppressWarnings("unchecked")
+@SuppressWarnings("unchecked")
 public class DataMain {
     private JSONObject jsonData;
     public DataMain() {
@@ -48,9 +48,6 @@ public class DataMain {
             total += getTotal(incOrExp, (String) typeKey);
         }
         return total;
-    }
-    public boolean isEmpty() {
-        return getHash("Income").isEmpty() && getHash("Expenditure").isEmpty();
     }
     public boolean addType(String incOrExp, String typeKey) {
         if (getHash(incOrExp).containsKey(typeKey)) {
@@ -122,10 +119,7 @@ public class DataMain {
             jsonData = (JSONObject) in.readObject();
             in.close();
             fileIn.close();
-            if (dataStructCheck(jsonData)) {
-                return true;
-            }
-            return false;
+            return dataStructCheck(jsonData);
         } catch(Exception e) {
             e.printStackTrace();
             return false;
@@ -194,13 +188,13 @@ public class DataMain {
                 Object[] typeKeys = data.keySet().toArray();
                 List<Object> typeKeys2 = new ArrayList<>(Arrays.asList(typeKeys));
                 Collections.reverse(typeKeys2);
-                LinkedHashMap<String,JSONObject> newData = new LinkedHashMap<String,JSONObject>();
+                LinkedHashMap<String,JSONObject> newData = new LinkedHashMap<>();
                 String[] incomeTypeKeys = new String[] {"Membership", "Fundraising", "Sponsorship", "Other Income"};
                 String[] expenditureTypeKeys = new String[] {"AU Membership", "BUCS Affiliation", "NGB Membership",
                         "Facility Contribution", "Facility Hire", "Equipment Purchase", "Facility Hire",
                         "Coaching Costs", "Facility Hire", "Competition Event Costs", "Other Event Costs",
                         "Other Costs"};
-                if (incOrExp == "Income") {
+                if (incOrExp.equals("Income")) {
                     for (String incomeTypeKey:incomeTypeKeys) {
                         newData.put(incomeTypeKey, new JSONObject());
                     }
