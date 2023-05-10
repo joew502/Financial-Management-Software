@@ -20,12 +20,12 @@ public class GUIMainMenu {
         loadDataButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (Main.dataMain.load("program_data.ser")) {
+                /*if (Main.dataMain.load("program_data.ser")) {
                     JOptionPane.showMessageDialog(Main.guiMain, "Loaded Successfully");
                 } else {
                     JOptionPane.showMessageDialog(Main.guiMain, "Loaded Failed - Ensure file format is correct");
-                }
-                /*JFileChooser fileChooser = new JFileChooser(); //TODO Remove Dev Tools
+                }*/
+                JFileChooser fileChooser = new JFileChooser(); //TODO Remove Dev Tools
                 int option = fileChooser.showOpenDialog(Main.guiMain);
                 if(option == JFileChooser.APPROVE_OPTION){
                     File file = fileChooser.getSelectedFile();
@@ -34,25 +34,27 @@ public class GUIMainMenu {
                     } else {
                         JOptionPane.showMessageDialog(Main.guiMain, "Loaded Failed - Ensure file format is correct");
                     }
-                }*/
+                }
             }
         });
         saveDataButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (Main.dataMain.save("program_data.ser")) {
+                /*if (Main.dataMain.save("program_data.ser")) {
                     JOptionPane.showMessageDialog(Main.guiMain, "Saved Successfully");
                 } else {
                     JOptionPane.showMessageDialog(Main.guiMain, "Save Failed");
-                }
-                /*JFileChooser fileChooser = new JFileChooser(); TODO Remove Dev Tools
+                }*/
+                JFileChooser fileChooser = new JFileChooser(); // TODO Remove Dev Tools
                 int option = fileChooser.showSaveDialog(Main.guiMain);
                 if(option == JFileChooser.APPROVE_OPTION){
                     File file = fileChooser.getSelectedFile();
-                    resultLabel.setText(Main.dataMain.save(file.getPath()));
-                }else{
-                    resultLabel.setText("Save Canceled");
-                }*/
+                    if (Main.dataMain.save(file.getPath())) {
+                        JOptionPane.showMessageDialog(Main.guiMain, "Saved Successfully");
+                    } else {
+                        JOptionPane.showMessageDialog(Main.guiMain, "Save Failed");
+                    }
+                }
             }
         });
         displayInAndExpButton.addActionListener(new ActionListener() {
