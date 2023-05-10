@@ -12,6 +12,9 @@ public class DataMain {
         jsonData.put("Income", new LinkedHashMap<String, JSONObject>());
         jsonData.put("Expenditure", new LinkedHashMap<String, JSONObject>());
     }
+    public DataMain(DataMain dataMain) {
+        this.jsonData = new JSONObject(dataMain.jsonData);
+    }
     private LinkedHashMap<String, JSONObject> getHash(String incOrExp) {
         return (LinkedHashMap<String,JSONObject>) jsonData.get(incOrExp);
     }
