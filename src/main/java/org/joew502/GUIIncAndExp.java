@@ -2,8 +2,6 @@ package org.joew502;
 
 import javax.swing.*;
 import javax.swing.table.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class GUIIncAndExp {
     public JPanel mainPanel;
@@ -20,43 +18,31 @@ public class GUIIncAndExp {
 
     public GUIIncAndExp(){
 
-        returnButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //Main.guiMain.guiMainMenu.refreshData();
-                Main.guiMain.crd.show(Main.guiMain.cPane, "mainMenu");
-            }
+        returnButton.addActionListener(e -> {
+            //Main.guiMain.guiMainMenu.refreshData();
+            Main.guiMain.crd.show(Main.guiMain.cPane, "mainMenu");
         });
-        addIncTypeButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Main.guiMain.guiAddType.refreshData("Income");
-                Main.guiMain.crd.show(Main.guiMain.cPane, "addType");
-            }
+        addIncTypeButton.addActionListener(e -> {
+            Main.guiMain.guiAddType.refreshData("Income");
+            Main.guiMain.crd.show(Main.guiMain.cPane, "addType");
         });
-        addExpTypeButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Main.guiMain.guiAddType.refreshData("Expenditure");
-                Main.guiMain.crd.show(Main.guiMain.cPane, "addType");
-            }
+        addExpTypeButton.addActionListener(e -> {
+            Main.guiMain.guiAddType.refreshData("Expenditure");
+            Main.guiMain.crd.show(Main.guiMain.cPane, "addType");
         });
-        addDefaultTypesButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String[] incomeTypeKeys = new String[] {"Membership", "Fundraising", "Sponsorship", "Other Income"};
-                for (String typeKey:incomeTypeKeys) {
-                    Main.dataMain.addType("Income", typeKey);
-                }
-                String[] expenditureTypeKeys = new String[] {"AU Membership", "BUCS Affiliation", "NGB Membership",
-                        "Facility Contribution", "Facility Hire", "Equipment Purchase", "Facility Hire",
-                        "Coaching Costs", "Facility Hire", "Competition Event Costs", "Other Event Costs",
-                        "Other Costs"};
-                for (String typeKey:expenditureTypeKeys) {
-                    Main.dataMain.addType("Expenditure", typeKey);
-                }
-                refreshData();
+        addDefaultTypesButton.addActionListener(e -> {
+            String[] incomeTypeKeys = new String[] {"Membership", "Fundraising", "Sponsorship", "Other Income"};
+            for (String typeKey:incomeTypeKeys) {
+                Main.dataMain.addType("Income", typeKey);
             }
+            String[] expenditureTypeKeys = new String[] {"AU Membership", "BUCS Affiliation", "NGB Membership",
+                    "Facility Contribution", "Facility Hire", "Equipment Purchase", "Facility Hire",
+                    "Coaching Costs", "Facility Hire", "Competition Event Costs", "Other Event Costs",
+                    "Other Costs"};
+            for (String typeKey:expenditureTypeKeys) {
+                Main.dataMain.addType("Expenditure", typeKey);
+            }
+            refreshData();
         });
     }
 

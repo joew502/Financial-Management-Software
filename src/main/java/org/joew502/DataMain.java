@@ -3,7 +3,6 @@ package org.joew502;
 import java.io.*;
 import java.util.*;
 import org.json.simple.*;
-import org.json.simple.parser.*;
 
 @SuppressWarnings("unchecked")
 public class DataMain {
@@ -138,6 +137,7 @@ public class DataMain {
             return false;
         }
     }
+    @SuppressWarnings("unused")
     private boolean dataStructCheck(JSONObject dataFile) {
         if (!dataFile.containsKey("Income")) {
             return false;
@@ -175,67 +175,5 @@ public class DataMain {
             }
         }
         return true;
-    }
-    public void loadJson(String filePath){ //TODO: Remove dev tools
-        JSONParser jsonParser = new JSONParser();
-        try {
-            Object obj = jsonParser.parse(new FileReader(filePath));
-            jsonData = (JSONObject) obj;
-
-            String[] incAndExp = new String[] {"Income", "Expenditure"};
-            for (String incOrExp:incAndExp) {
-                JSONObject data = (JSONObject) jsonData.get(incOrExp);
-                Object[] typeKeys = data.keySet().toArray();
-                List<Object> typeKeys2 = new ArrayList<>(Arrays.asList(typeKeys));
-                Collections.reverse(typeKeys2);
-                LinkedHashMap<String,JSONObject> newData = new LinkedHashMap<>();
-                String[] incomeTypeKeys = new String[] {"Membership", "Fundraising", "Sponsorship", "Other Income"};
-                String[] expenditureTypeKeys = new String[] {"AU Membership", "BUCS Affiliation", "NGB Membership",
-                        "Facility Contribution", "Facility Hire", "Equipment Purchase", "Facility Hire",
-                        "Coaching Costs", "Facility Hire", "Competition Event Costs", "Other Event Costs",
-                        "Other Costs"};
-                if (incOrExp.equals("Income")) {
-                    for (String incomeTypeKey:incomeTypeKeys) {
-                        newData.put(incomeTypeKey, new JSONObject());
-                    }
-                } else {
-                    for (String expTypeKey:expenditureTypeKeys) {
-                        newData.put(expTypeKey, new JSONObject());
-                    }
-                }
-                for (Object typeKey:typeKeys2) {
-                    //newIncomeData.put((String) incomeKey, new JSONObject());
-                    newData.get(typeKey).put("Detail", new LinkedHashMap<String, Float>());
-                    newData.get(typeKey).put("Expected", ((Double) ((JSONObject) data.get(typeKey)).get("Expected")).floatValue());
-                    newData.get(typeKey).put("Final", ((boolean) ((JSONObject) data.get(typeKey)).get("Final")));
-                    JSONObject detail = (JSONObject) ((JSONObject) data.get(typeKey)).get("Detail");
-                    Object[] detailKeys = detail.keySet().toArray();
-                    List<Object> detailKeys2 = new ArrayList<>(Arrays.asList(detailKeys));
-                    Collections.reverse(detailKeys2);
-                    LinkedHashMap<String, Float> newDetail = (LinkedHashMap<String, Float>) newData.get(typeKey).get("Detail");
-                    for (Object incomeDetailKey:detailKeys2) {
-                        newDetail.put((String) incomeDetailKey, ((Double) detail.get(incomeDetailKey)).floatValue());
-                    }
-                }
-                jsonData.remove(incOrExp);
-                jsonData.put(incOrExp, newData);
-            }
-
-            System.out.println("Loaded Successfully");
-        } catch(Exception e) {
-            e.printStackTrace();
-            System.out.println("Load Failed");
-        }
-    }
-    public void saveJson(String filePath){ //TODO: Remove dev tools
-        try {
-            FileWriter file = new FileWriter(filePath);
-            file.write(jsonData.toJSONString());
-            file.close();
-            System.out.println("Saved Successfully");
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Save Failed");
-        }
     }
 }

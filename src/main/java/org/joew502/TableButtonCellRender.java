@@ -5,6 +5,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 
 public class TableButtonCellRender extends DefaultTableCellRenderer {
+    @SuppressWarnings("FieldMayBeFinal")
     private String buttonText;
     public TableButtonCellRender(String buttonText){
         this.buttonText = buttonText;

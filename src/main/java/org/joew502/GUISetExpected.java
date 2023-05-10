@@ -1,8 +1,6 @@
 package org.joew502;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class GUISetExpected {
     public JPanel mainPanel;
@@ -14,24 +12,18 @@ public class GUISetExpected {
     private String currentIncOrExp;
     private String currentTypeKey;
     public GUISetExpected() {
-        returnButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        returnButton.addActionListener(e -> {
+            Main.guiMain.guiIncOrExpType.refreshData(currentIncOrExp, currentTypeKey);
+            Main.guiMain.crd.show(Main.guiMain.cPane, "incOrExpType");
+        });
+        submitButton.addActionListener(e -> {
+            try {
+                float newValue = Float.parseFloat(expectedField.getText());
+                Main.dataMain.setExpected(currentIncOrExp, currentTypeKey, newValue);
                 Main.guiMain.guiIncOrExpType.refreshData(currentIncOrExp, currentTypeKey);
                 Main.guiMain.crd.show(Main.guiMain.cPane, "incOrExpType");
-            }
-        });
-        submitButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    float newValue = Float.parseFloat(expectedField.getText());
-                    Main.dataMain.setExpected(currentIncOrExp, currentTypeKey, newValue);
-                    Main.guiMain.guiIncOrExpType.refreshData(currentIncOrExp, currentTypeKey);
-                    Main.guiMain.crd.show(Main.guiMain.cPane, "incOrExpType");
-                } catch (Exception NumberFormatException) {
-                    JOptionPane.showMessageDialog(Main.guiMain,"Please enter a suitable float");
-                }
+            } catch (Exception NumberFormatException) {
+                JOptionPane.showMessageDialog(Main.guiMain,"Please enter a suitable float");
             }
         });
     }
