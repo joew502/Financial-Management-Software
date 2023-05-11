@@ -1,8 +1,6 @@
 package org.joew502;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class GUIAddDetail {
     public JPanel mainPanel;
@@ -14,28 +12,22 @@ public class GUIAddDetail {
     private String currentIncOrExp;
     private String currentTypeKey;
     public GUIAddDetail() {
-        returnButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Main.guiMain.guiIncOrExpType.refreshData(currentIncOrExp, currentTypeKey);
-                Main.guiMain.crd.show(Main.guiMain.cPane, "incOrExpType");
-            }
+        returnButton.addActionListener(e -> {
+            Main.guiMain.guiIncOrExpType.refreshData(currentIncOrExp, currentTypeKey);
+            Main.guiMain.crd.show(Main.guiMain.cPane, "incOrExpType");
         });
-        addDetailButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    String addDetailName = nameField.getText();
-                    float addDetailValue = Float.parseFloat(valueField.getText());
-                    if (Main.dataMain.addDetail(currentIncOrExp, currentTypeKey, addDetailName, addDetailValue)) {
-                        Main.guiMain.guiIncOrExpType.refreshData(currentIncOrExp, currentTypeKey);
-                        Main.guiMain.crd.show(Main.guiMain.cPane, "incOrExpType");
-                    } else {
-                        JOptionPane.showMessageDialog(Main.guiMain,"This detail already exists in "+currentIncOrExp+">"+ currentTypeKey);
-                    }
-                } catch (Exception exception) {
-                    JOptionPane.showMessageDialog(Main.guiMain,"Please enter a suitable string for the name and float for the value");
+        addDetailButton.addActionListener(e -> {
+            try {
+                String addDetailName = nameField.getText();
+                float addDetailValue = Float.parseFloat(valueField.getText());
+                if (Main.dataMain.addDetail(currentIncOrExp, currentTypeKey, addDetailName, addDetailValue)) {
+                    Main.guiMain.guiIncOrExpType.refreshData(currentIncOrExp, currentTypeKey);
+                    Main.guiMain.crd.show(Main.guiMain.cPane, "incOrExpType");
+                } else {
+                    JOptionPane.showMessageDialog(Main.guiMain,"This detail already exists in "+currentIncOrExp+">"+ currentTypeKey);
                 }
+            } catch (Exception exception) {
+                JOptionPane.showMessageDialog(Main.guiMain,"Please enter a suitable string for the name and float for the value");
             }
         });
     }

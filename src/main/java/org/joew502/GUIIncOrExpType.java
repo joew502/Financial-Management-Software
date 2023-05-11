@@ -2,8 +2,6 @@ package org.joew502;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class GUIIncOrExpType {
     public JPanel mainPanel;
@@ -19,45 +17,30 @@ public class GUIIncOrExpType {
     private String currentTypeKey;
 
     public GUIIncOrExpType() {
-        returnButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        returnButton.addActionListener(e -> {
+            Main.guiMain.guiIncAndExp.refreshData();
+            Main.guiMain.crd.show(Main.guiMain.cPane, "incAndExp");
+        });
+        addDetailButton.addActionListener(e -> {
+            Main.guiMain.guiAddDetail.refreshData(currentIncOrExp, currentTypeKey);
+            Main.guiMain.crd.show(Main.guiMain.cPane, "addDetail");
+        });
+        deleteTypeButton.addActionListener(e -> {
+            int confirm = JOptionPane.showConfirmDialog(Main.guiMain, "Are you sure you want to delete" +
+                    " this type?", "Confirm Type Deletion", JOptionPane.YES_NO_OPTION);
+            if (confirm == 0) {
+                Main.dataMain.deleteType(currentIncOrExp, currentTypeKey);
                 Main.guiMain.guiIncAndExp.refreshData();
                 Main.guiMain.crd.show(Main.guiMain.cPane, "incAndExp");
             }
         });
-        addDetailButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Main.guiMain.guiAddDetail.refreshData(currentIncOrExp, currentTypeKey);
-                Main.guiMain.crd.show(Main.guiMain.cPane, "addDetail");
-            }
+        toggleFinalButton.addActionListener(e -> {
+            Main.dataMain.toggleFinal(currentIncOrExp, currentTypeKey);
+            Main.guiMain.guiIncOrExpType.refreshData(currentIncOrExp, currentTypeKey);
         });
-        deleteTypeButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int confirm = JOptionPane.showConfirmDialog(Main.guiMain, "Are you sure you want to delete" +
-                        " this type?", "Confirm Type Deletion", JOptionPane.YES_NO_OPTION);
-                if (confirm == 0) {
-                    Main.dataMain.deleteType(currentIncOrExp, currentTypeKey);
-                    Main.guiMain.guiIncAndExp.refreshData();
-                    Main.guiMain.crd.show(Main.guiMain.cPane, "incAndExp");
-                }
-            }
-        });
-        toggleFinalButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Main.dataMain.toggleFinal(currentIncOrExp, currentTypeKey);
-                Main.guiMain.guiIncOrExpType.refreshData(currentIncOrExp, currentTypeKey);
-            }
-        });
-        editExpectedButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Main.guiMain.guiSetExpected.refreshData(currentIncOrExp, currentTypeKey);
-                Main.guiMain.crd.show(Main.guiMain.cPane, "setExpected");
-            }
+        editExpectedButton.addActionListener(e -> {
+            Main.guiMain.guiSetExpected.refreshData(currentIncOrExp, currentTypeKey);
+            Main.guiMain.crd.show(Main.guiMain.cPane, "setExpected");
         });
     }
     public void refreshData(String incOrExp, String typeKey) {

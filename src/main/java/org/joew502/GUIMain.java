@@ -40,10 +40,6 @@ public class GUIMain extends JFrame {
         guiSetExpected = new GUISetExpected();
         cPane.add("setExpected", guiSetExpected.mainPanel);
 
-        //Image icon = Toolkit.getDefaultToolkit().getImage("fms_icon_small.png");
-        //setIconImage(icon);
-        //ImageIcon img = new ImageIcon("fms_icon_small.png");
-        //setIconImage(img.getImage());
         setTitle("Financial Management Software");
         setBounds(200,200,1000,600);
         setVisible(true);
