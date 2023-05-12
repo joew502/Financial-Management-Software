@@ -3,6 +3,10 @@ package org.joew502;
 import javax.swing.*;
 import javax.swing.table.*;
 
+/**
+ * This class is the controller for the 'Income and Expenditure' Page
+ * This page allows the user to view the total balances and type breakdowns. As well as linking to other pages.
+ */
 public class GUIIncAndExp {
     public JPanel mainPanel;
     private JButton returnButton;
@@ -16,21 +20,25 @@ public class GUIIncAndExp {
     private JButton addDefaultTypesButton;
     private JLabel detailLabel;
 
+    /**
+     * The constructor initiates the action listeners for each of the buttons in the view
+     */
     public GUIIncAndExp(){
-
-        returnButton.addActionListener(e -> {
-            //Main.guiMain.guiMainMenu.refreshData();
+        returnButton.addActionListener(e -> { // On activation this will switch the view to the previous page
             Main.guiMain.crd.show(Main.guiMain.cPane, "mainMenu");
         });
-        addIncTypeButton.addActionListener(e -> {
+        addIncTypeButton.addActionListener(e -> { // On activation this will switch the view to the 'Add Type' view
+                                                  // for Income.
             Main.guiMain.guiAddType.refreshData("Income");
             Main.guiMain.crd.show(Main.guiMain.cPane, "addType");
         });
-        addExpTypeButton.addActionListener(e -> {
+        addExpTypeButton.addActionListener(e -> { // On activation this will switch the view to the 'Add Type' view
+                                                  // for Expenditure.
             Main.guiMain.guiAddType.refreshData("Expenditure");
             Main.guiMain.crd.show(Main.guiMain.cPane, "addType");
         });
-        addDefaultTypesButton.addActionListener(e -> {
+        addDefaultTypesButton.addActionListener(e -> { // On activation this will populate the data structure with some
+                                                       // default types and update the view.
             String[] incomeTypeKeys = new String[] {"Membership", "Fundraising", "Sponsorship", "Other Income"};
             for (String typeKey:incomeTypeKeys) {
                 Main.dataMain.addType("Income", typeKey);
@@ -46,6 +54,9 @@ public class GUIIncAndExp {
         });
     }
 
+    /**
+     * When this method is called it will recalculate totals from the model and update the view
+     */
     public void refreshData() {
         updateTables(incomeTable,"Income");
         updateTables(expenditureTable, "Expenditure");
@@ -66,6 +77,11 @@ public class GUIIncAndExp {
                 String.format("%.2f", minTotal)+"    Max: £"+String.format("%.2f", maxTotal)+")");
     }
 
+    /**
+     * When this method is called, it will re-form the given table with updated information from the model.
+     * @param dataTable - JTable to be updated
+     * @param incOrExp - String of "Income" or "Expenditure"
+     */
     private void updateTables(JTable dataTable, String incOrExp) {
         Object[] typeKeys = Main.dataMain.getKeys(incOrExp);
         DefaultTableModel dataTableModel = new DefaultTableModel();
