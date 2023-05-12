@@ -3,6 +3,10 @@ package org.joew502;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * This class acts as a main controller for the program. The class extends the swing JFrame and on initialisation,
+ * initialises and adds all the program views to the card layout.
+ */
 public class GUIMain extends JFrame {
     public CardLayout crd;
     public Container cPane;
@@ -15,10 +19,12 @@ public class GUIMain extends JFrame {
     public GUISetExpected guiSetExpected;
     public GUIMain(){
 
+        // Setting the layout of the JFame content pane to a card layout, allowing switching between views
         cPane = getContentPane();
         crd = new CardLayout();
         cPane.setLayout(crd);
 
+        // Each view is initialised and added to the card layout with a relevant identifier
         guiMainMenu = new GUIMainMenu();
         cPane.add("mainMenu", guiMainMenu.mainPanel);
 
@@ -40,6 +46,7 @@ public class GUIMain extends JFrame {
         guiSetExpected = new GUISetExpected();
         cPane.add("setExpected", guiSetExpected.mainPanel);
 
+        // Variables and bounds are set for the JFrame
         setTitle("Financial Management Software");
         setBounds(200,200,1000,600);
         setVisible(true);
